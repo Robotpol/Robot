@@ -24,8 +24,6 @@
         <maven.compiler.target>${project.version.java}</maven.compiler.target>
         <maven.compiler.plugin>3.10.1</maven.compiler.plugin>
         <maven.failsafe.plugin>3.0.0-M5</maven.failsafe.plugin>
-        <maven.surefire.plugin>3.0.0-M5</maven.surefire.plugin>
-        <maven.enforcer.plugin>3.0.0</maven.enforcer.plugin>
         <maven.dependency.plugin.version>3.3.0</maven.dependency.plugin.version>
         <maven.jacoco.plugin>0.8.7</maven.jacoco.plugin>
         <testng.version>7.5</testng.version>
@@ -83,23 +81,6 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin}</version>
-            </plugin>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven.surefire.plugin}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>${maven.failsafe.plugin}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
