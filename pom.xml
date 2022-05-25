@@ -16,18 +16,18 @@
     <properties>
         <version.maven>3.6.2</version.maven>
         <project.version.java>17</project.version.java>
+        <sonar.organization>robotpol</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
         <maven.compiler.source>${project.version.java}</maven.compiler.source>
         <maven.compiler.target>${project.version.java}</maven.compiler.target>
         <maven.compiler.plugin>3.10.1</maven.compiler.plugin>
-        <maven.failsafe.plugin>3.0.0-M5</maven.failsafe.plugin>
-        <maven.surefire.plugin>3.0.0-M5</maven.surefire.plugin>
-        <maven.enforcer.plugin>3.0.0</maven.enforcer.plugin>
         <maven.dependency.plugin.version>3.3.0</maven.dependency.plugin.version>
         <maven.jacoco.plugin>0.8.7</maven.jacoco.plugin>
         <testng.version>7.5</testng.version>
         <spotbugs-maven-plugin.version>4.7.0.0</spotbugs-maven-plugin.version>
+        <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
     </properties>
     <dependencies>
         <dependency>
@@ -83,26 +83,9 @@
                 <version>${maven.compiler.plugin}</version>
             </plugin>
             <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven.surefire.plugin}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>${maven.failsafe.plugin}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>${maven.enforcer.plugin}</version>
+                <version>${maven-enforcer-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>enforce-rules</id>
