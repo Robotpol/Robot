@@ -23,11 +23,11 @@
         <maven.compiler.source>${project.version.java}</maven.compiler.source>
         <maven.compiler.target>${project.version.java}</maven.compiler.target>
         <maven.compiler.plugin>3.10.1</maven.compiler.plugin>
-        <maven.failsafe.plugin>3.0.0-M5</maven.failsafe.plugin>
         <maven.dependency.plugin.version>3.3.0</maven.dependency.plugin.version>
         <maven.jacoco.plugin>0.8.7</maven.jacoco.plugin>
         <testng.version>7.5</testng.version>
         <spotbugs-maven-plugin.version>4.7.0.0</spotbugs-maven-plugin.version>
+        <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
     </properties>
     <dependencies>
         <dependency>
@@ -85,7 +85,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>${maven.enforcer.plugin}</version>
+                <version>${maven-enforcer-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>enforce-rules</id>
