@@ -14,11 +14,8 @@ class Books {
         this.books = books;
     }
 
-    Books concat(Books other) {
-        var newBooks = new ArrayList<Book>();
-        newBooks.addAll(this.books);
-        newBooks.addAll(other.books);
-        return new Books(newBooks);
+    void concat(Books other) {
+       books.addAll(other.books);
     }
 
     @Override
