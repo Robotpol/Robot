@@ -5,7 +5,7 @@ package robot;
  */
 class CollectingBookException extends RuntimeException{
 
-    public CollectingBookException(String message, Throwable cause) {
+    CollectingBookException(String message, Throwable cause) {
         super(message, cause);
     }
 }
