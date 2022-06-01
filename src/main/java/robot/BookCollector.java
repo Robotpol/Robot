@@ -2,10 +2,7 @@ package robot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 /**
  * @author Dominik Żebracki
@@ -26,16 +23,9 @@ class BookCollector implements Callable<Books>{
         try {
             var futures = executor.invokeAll(scrappers);
             for(Future<Books> future : futures) {
-                try {
-                    Books results = future.get();
-                    System.out.println(results);
-                    collectedBooks.concat(results);
-                } catch (ExecutionException e) {
-                    throw new RuntimeException(e);
-                }
+                    collectedBooks.concat(future.get(5, TimeUnit.MINUTES));
             }
-            System.out.println("end of try");
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
             throw new CollectingBookException("Error occurred during collecting books", e);
         }
         return collectedBooks;

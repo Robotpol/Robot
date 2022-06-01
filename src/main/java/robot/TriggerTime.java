@@ -16,6 +16,7 @@ class TriggerTime {
         this.minute = minute;
         this.alreadyActivated = false;
     }
+
     TriggerTime(int hour, int minute, boolean alreadyActivated) {
         this.hour = hour;
         this.minute = minute;

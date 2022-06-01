@@ -34,24 +34,23 @@ class ActionTriggerer implements Runnable{
 
     @SuppressWarnings("all")
     private void listenForTrigger() {
-        try {
-            while (true) {
-                if(triggerTime.isTimeToActivate(LocalDateTime.now())) {
+        while (true) {
+            try {
+                if (triggerTime.isTimeToActivate(LocalDateTime.now())) {
+                    handleAction();
                 }
                 TimeUnit.SECONDS.sleep(DEFAULT_REFRESH_RATE_IN_SECONDS);
+            } catch (InterruptedException | ExecutionException | CollectingBookException e) {
+                System.err.printf("Error occurred during launching scrappers.%nCaused by %s%n", e.getCause());
+                // TODO implement some relaunching
             }
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
     }
 
-    private void handleAction() {
-        try {
+    private void handleAction() throws ExecutionException, InterruptedException {
             notifyUser(collectBooks());
-        } catch (ExecutionException | InterruptedException | CollectingBookException e) {
-            System.err.println("Error ocurred during collecting books.%nCaused by ".formatted());
-        }
     }
+
     private void notifyUser(Books books) {
             userNotificationService.notifyAboutNewUpdate(books);
     }
