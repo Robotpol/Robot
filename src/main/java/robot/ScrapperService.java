@@ -1,20 +1,22 @@
 package robot;
 
-import java.util.List;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Dominik Żebracki
  */
 class ScrapperService {
 
-    private final List<BookstoreScrapper> scrappers;
-    private TriggerTime triggerTime;
-    private Executor executor;
+    private final ExecutorService executorService;
+    private final ActionTriggerer actionTriggerer;
 
-    ScrapperService(List<BookstoreScrapper> scrappers, TriggerTime triggerTime, Executor executor) {
-        this.scrappers = scrappers;
-        this.triggerTime = triggerTime;
-        this.executor = executor;
+    ScrapperService(ExecutorService executorService, ActionTriggerer actionTriggerer) {
+        this.executorService = executorService;
+        this.actionTriggerer = actionTriggerer;
+        executeActions();
+    }
+
+    private void executeActions() {
+        executorService.execute(actionTriggerer);
     }
 }
