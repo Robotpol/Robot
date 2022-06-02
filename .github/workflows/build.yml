@@ -18,6 +18,13 @@ jobs:
         with:
           java-version: '17'
           distribution: 'corretto'
+          # Caching mvn dependencies
           cache: 'maven'
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Build with Maven
         run: mvn -B -DskipTests=true package --file pom.xml
