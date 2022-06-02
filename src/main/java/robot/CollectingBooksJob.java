@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.Executors;
 
 public class CollectingBooksJob implements Job {
 
@@ -40,7 +39,7 @@ public class CollectingBooksJob implements Job {
     @Override
     public void execute(JobExecutionContext context) {
         userNotificationService.notifyAboutNewUpdate(
-                new BookCollector(List.of(new BonitoScrapper(), new GandalfScrapper()), Executors.newCachedThreadPool())
-                        .call());
+                new BookCollector(List.of(new BonitoScrapper(), new GandalfScrapper()))
+                        .collect());
     }
 }

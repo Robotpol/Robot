@@ -14,6 +14,17 @@ class Books {
         this.books = books;
     }
 
+    Books() {
+        books = new ArrayList<>();
+    }
+
+    static Books fromList(List<Books> books) {
+        return new Books(books.stream()
+                .map(b -> b.books.stream())
+                .flatMap(b -> b)
+                .toList());
+    }
+
     void concat(Books other) {
        books.addAll(other.books);
     }
