@@ -17,7 +17,8 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          cache: maven
+          distribution: 'corretto'
+          cache: 'maven'
       - name: Test with Maven
         run: mvn -B test --file pom.xml
 
@@ -32,7 +33,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          cache: sonarcloud
+          distribution: 'corretto'
       - name: Test with SonarCloud
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
