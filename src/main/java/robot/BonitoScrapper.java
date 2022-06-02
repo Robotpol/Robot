@@ -2,6 +2,7 @@ package robot;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Mariusz Bal
@@ -33,8 +35,17 @@ class BonitoScrapper implements BookstoreScrapper {
     private void loopPages(WebDriver driver, int pages, List<Book> books) {
         for (int i = 0; i < pages; i++) {
             var booksElements = driver.findElements(By.className("product_box"));
-            booksElements.stream().map(this::readBookInfo).forEach(books::add);
+            booksElements.stream().map(this::tryBookScrap).filter(Objects::nonNull).forEach(books::add);
             clickNextPage(driver);
+        }
+    }
+
+    private Book tryBookScrap(WebElement book) {
+        try {
+            return readBookInfo(book);
+        } catch (NoSuchElementException e) {
+            System.err.printf("Unable to scrap %s element. Skipping.%n", book.getText());
+            return null;
         }
     }
 
