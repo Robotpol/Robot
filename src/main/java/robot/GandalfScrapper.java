@@ -2,6 +2,7 @@ package robot;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -12,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Mariusz Bal
@@ -40,8 +42,17 @@ class GandalfScrapper implements BookstoreScrapper {
         for (int i = 0; i < pages; i++) {
             waitForBooksToLoad(driver);
             var booksElements = driver.findElements(By.className("info-box"));
-            booksElements.stream().map(this::readBookInfo).forEach(books::add);
+            booksElements.stream().map(this::tryBookScrap).filter(Objects::nonNull).forEach(books::add);
             clickNextPage(driver);
+        }
+    }
+
+    private Book tryBookScrap(WebElement book) {
+        try {
+            return readBookInfo(book);
+        } catch (NoSuchElementException e) {
+            System.err.printf("Unable to scrap %s element. Skipping.%n", book.getText());
+            return null;
         }
     }
 
