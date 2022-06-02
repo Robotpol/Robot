@@ -20,7 +20,7 @@ class BonitoScrapper implements BookstoreScrapper {
     @Override
     public Books call() {
         WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments("headless"));
+        WebDriver driver = new ChromeDriver(/*new ChromeOptions().addArguments("headless")*/);
         driver.get("https://bonito.pl/kategoria/ksiazki/?sale=1");
 
         int pages = findPageCount(driver);
@@ -71,6 +71,8 @@ class BonitoScrapper implements BookstoreScrapper {
         var newPrice = bookElement.findElement(By.xpath(".//span[contains(@class, 'H3B') " +
                 "and contains(@class, 'me-1')]")).getText();
 
-        return new Book(title, author, transformPrice(oldPrice), transformPrice(newPrice));
+        var b = new Book(title, author, transformPrice(oldPrice), transformPrice(newPrice));
+        System.out.println(b);//todo may be removed later
+        return b;
     }
 }

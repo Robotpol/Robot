@@ -24,8 +24,8 @@ class GandalfScrapper implements BookstoreScrapper {
     public Books call() {
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments(List.of(
-                "headless",
-                "window-size=1920,1080"
+               // "headless",
+                //"window-size=1920,1080"
         )));
         driver.get("https://www.gandalf.com.pl/promocje/bcb");
 
@@ -41,7 +41,8 @@ class GandalfScrapper implements BookstoreScrapper {
     private void loopPages(WebDriver driver, int pages, List<Book> books) {
         for (int i = 0; i < pages; i++) {
             waitForBooksToLoad(driver);
-            var booksElements = driver.findElements(By.className("info-box"));
+            var booksSection = driver.findElement(By.id("list-of-filter-products"));
+            var booksElements = booksSection.findElements(By.className("info-box"));
             booksElements.stream().map(this::tryBookScrap).filter(Objects::nonNull).forEach(books::add);
             clickNextPage(driver);
         }
@@ -75,6 +76,9 @@ class GandalfScrapper implements BookstoreScrapper {
         var author = book.findElement(By.className("author")).getText();
         var oldPrice = book.findElement(By.className("old-price")).getText();
         var newPrice = book.findElement(By.className("current-price")).getText();
-        return new Book(title, author, transformPrice(oldPrice), transformPrice(newPrice));
+
+        var b = new Book(title, author, transformPrice(oldPrice), transformPrice(newPrice));
+        System.out.println(b);//todo may be removed later
+        return b;
     }
 }
