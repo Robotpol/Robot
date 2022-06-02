@@ -19,16 +19,12 @@ import java.util.Objects;
 /**
  * @author Mariusz Bal
  */
-@SuppressFBWarnings(value = "THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION")
 class GandalfScrapper implements BookstoreScrapper {
 
     @Override
     public Books call() {
         WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments(List.of(
-                // "headless",
-                //"window-size=1920,1080"
-        )));
+        WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments(List.of("--headless", "--disable-gpu")));
         driver.get("https://www.gandalf.com.pl/promocje/bcb");
 
         int pages = findPageCount(driver);
@@ -79,8 +75,6 @@ class GandalfScrapper implements BookstoreScrapper {
         var oldPrice = book.findElement(By.className("old-price")).getText();
         var newPrice = book.findElement(By.className("current-price")).getText();
 
-        var b = new Book(title, author, transformPrice(oldPrice), transformPrice(newPrice));
-        System.out.println("gandalf" + b);//todo may be removed later
-        return b;
+        return new Book(title, author, transformPrice(oldPrice), transformPrice(newPrice));
     }
 }
