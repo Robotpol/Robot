@@ -8,5 +8,6 @@ import java.math.BigDecimal;
 record Book(
         String title,
         String author,
+        BigDecimal oldPrice,
         BigDecimal price) {
 }

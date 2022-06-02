@@ -28,6 +28,7 @@ class BookCollector implements Callable<Books>{
                     collectedBooks.concat(future.get(5, TimeUnit.MINUTES));
             }
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            Thread.currentThread().interrupt();
             throw new CollectingBookException("Error occurred during collecting books", e);
         }
         return collectedBooks;
