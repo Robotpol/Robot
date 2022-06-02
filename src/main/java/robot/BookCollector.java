@@ -1,5 +1,6 @@
 package robot;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
@@ -7,6 +8,7 @@ import java.util.concurrent.*;
 /**
  * @author Dominik Żebracki
  */
+@SuppressFBWarnings(value = "THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION")
 class BookCollector implements Callable<Books>{
 
     private final List<BookstoreScrapper> scrappers;
