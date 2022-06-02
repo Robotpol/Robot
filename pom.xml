@@ -32,6 +32,7 @@
         <spotbugs.version>4.7.0</spotbugs.version>
         <selenium.version>4.1.4</selenium.version>
         <webdrivermanager.version>5.1.1</webdrivermanager.version>
+        <quartz.version>2.3.2</quartz.version>
     </properties>
     <dependencies>
         <dependency>
@@ -87,6 +88,12 @@
             <artifactId>webdrivermanager</artifactId>
             <version>${webdrivermanager.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>${quartz.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
