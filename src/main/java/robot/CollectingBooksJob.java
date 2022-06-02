@@ -5,8 +5,10 @@ import org.quartz.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.List;
 
+/**
+ * @author Dominik Żebracki
+ */
 public class CollectingBooksJob implements Job {
 
     private final UserNotificationService userNotificationService;
@@ -39,7 +41,7 @@ public class CollectingBooksJob implements Job {
     @Override
     public void execute(JobExecutionContext context) {
         userNotificationService.notifyAboutNewUpdate(
-                new BookCollector(List.of(new BonitoScrapper(), new GandalfScrapper()))
-                        .collect());
+                new BookCollector()
+                        .collectFrom(Scrappers.createDefaultCollection().getAll()));
     }
 }

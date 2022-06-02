@@ -4,6 +4,9 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
 
+/**
+ * @author Dominik Żebracki
+ */
 class ActionScheduler {
 
     private final Scheduler scheduler;

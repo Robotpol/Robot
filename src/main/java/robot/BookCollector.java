@@ -1,7 +1,5 @@
 package robot;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
@@ -14,15 +12,9 @@ class BookCollector {
 
     private static final int DEFAULT_TIMEOUT_IN_MINUTES = 8;
 
-    private final List<BookstoreScrapper> scrappers;
-
-    BookCollector(List<BookstoreScrapper> scrappers) {
-        this.scrappers = scrappers;
-    }
-
-    Books collect() {
+    Books collectFrom(List<BookstoreScrapper> scrappers) {
         try {
-            var tasks = createTasks();
+            var tasks = createTasks(scrappers);
             return Books.fromList(CompletableFuture.allOf(tasks.toArray(new CompletableFuture[0]))
                     .thenApply(f -> tasks.stream()
                             .map(CompletableFuture::join)
@@ -34,7 +26,7 @@ class BookCollector {
         }
     }
 
-    private List<CompletableFuture<Books>> createTasks() {
+    private List<CompletableFuture<Books>> createTasks(List<BookstoreScrapper> scrappers) {
         return scrappers.stream()
                 .map(s -> CompletableFuture.supplyAsync(s::call, Executors.newCachedThreadPool())
                         .exceptionally(this::handleException))

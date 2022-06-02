@@ -20,8 +20,7 @@ class Books {
 
     static Books fromList(List<Books> books) {
         return new Books(books.stream()
-                .map(b -> b.books.stream())
-                .flatMap(b -> b)
+                .flatMap(b -> b.books.stream())
                 .toList());
     }
 
