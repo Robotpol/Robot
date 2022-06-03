@@ -5,6 +5,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,15 +17,10 @@ import java.util.Objects;
  */
 class BonitoScrapper implements BookstoreScrapper {
 
-    private final WebDriver driver;
-
-    BonitoScrapper(WebDriver driver) {
-        this.driver = driver;
-    }
-
     @Override
     public Books call() {
         WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments(List.of("--headless", "--disable-gpu")));
         driver.get("https://bonito.pl/kategoria/ksiazki/?sale=1");
 
         int pages = findPageCount(driver);
@@ -36,7 +33,7 @@ class BonitoScrapper implements BookstoreScrapper {
     }
 
     private void loopPages(WebDriver driver, int pages, List<Book> books) {
-        for (int i = 0; i < pages; i++) {
+        for (int i = 0; i < 10; i++) {
             var booksElements = driver.findElements(By.className("product_box"));
             booksElements.stream().map(this::tryBookScrap).filter(Objects::nonNull).forEach(books::add);
             clickNextPage(driver);

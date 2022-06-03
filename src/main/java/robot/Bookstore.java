@@ -6,8 +6,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import java.util.List;
 
 public enum Bookstore {
-    GANDALF(new GandalfScrapper(new ChromeDriver(new ChromeOptions().addArguments(List.of("--headless", "--disable-gpu"))))),
-    BONITO(new BonitoScrapper(new ChromeDriver(new ChromeOptions().addArguments(List.of("--headless", "--disable-gpu")))));
+    GANDALF(new GandalfScrapper()),
+    BONITO(new BonitoScrapper());
 
     private final BookstoreScrapper scrapper;
 

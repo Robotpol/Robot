@@ -20,15 +20,10 @@ import java.util.Objects;
  */
 class GandalfScrapper implements BookstoreScrapper {
 
-    private final WebDriver driver;
-
-    GandalfScrapper(WebDriver driver) {
-        this.driver = driver;
-    }
-
     @Override
     public Books call() {
         WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments(List.of("--headless", "--disable-gpu")));
         driver.get("https://www.gandalf.com.pl/promocje/bcb");
 
         int pages = findPageCount(driver);
@@ -42,7 +37,7 @@ class GandalfScrapper implements BookstoreScrapper {
 
 
     private void loopPages(WebDriver driver, int pages, List<Book> books) {
-        for (int i = 0; i < pages; i++) {
+        for (int i = 0; i < 10; i++) {
             waitForBooksToLoad(driver);
             var booksSection = driver.findElement(By.id("list-of-filter-products"));
             var booksElements = booksSection.findElements(By.className("info-box"));
