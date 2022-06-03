@@ -1,6 +1,5 @@
 package robot;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -21,10 +20,15 @@ import java.util.Objects;
  */
 class GandalfScrapper implements BookstoreScrapper {
 
+    private final WebDriver driver;
+
+    GandalfScrapper(WebDriver driver) {
+        this.driver = driver;
+    }
+
     @Override
     public Books call() {
         WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments(List.of("--headless", "--disable-gpu")));
         driver.get("https://www.gandalf.com.pl/promocje/bcb");
 
         int pages = findPageCount(driver);
@@ -36,8 +40,9 @@ class GandalfScrapper implements BookstoreScrapper {
         return new Books(books);
     }
 
+
     private void loopPages(WebDriver driver, int pages, List<Book> books) {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < pages; i++) {
             waitForBooksToLoad(driver);
             var booksSection = driver.findElement(By.id("list-of-filter-products"));
             var booksElements = booksSection.findElements(By.className("info-box"));
@@ -55,7 +60,7 @@ class GandalfScrapper implements BookstoreScrapper {
         }
     }
 
-    private void clickNextPage(WebDriver driver) { //todo extract to the interface with findPageCount and readBookInfo?
+    private void clickNextPage(WebDriver driver) {
         driver.findElement(By.className("next")).click();
     }
 

@@ -16,7 +16,7 @@ interface BookstoreScrapper extends Callable<Books> {
     }
 
     private String trimZl(String price) {
-        return price.replace("zł", "").trim();
+        return price.replaceAll("[^\\d.,]", "");
     }
 
     private String replaceCommaInPrice(String price) {
