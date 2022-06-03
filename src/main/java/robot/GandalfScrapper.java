@@ -1,5 +1,6 @@
 package robot;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -18,6 +19,7 @@ import java.util.Objects;
 /**
  * @author Mariusz Bal
  */
+@SuppressFBWarnings(value = "THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION")
 class GandalfScrapper implements BookstoreScrapper {
 
     @Override
