@@ -30,6 +30,8 @@
         <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
         <jcip-annotations.version>1.0</jcip-annotations.version>
         <spotbugs.version>4.7.0</spotbugs.version>
+        <selenium.version>4.1.4</selenium.version>
+        <webdrivermanager.version>5.1.1</webdrivermanager.version>
     </properties>
     <dependencies>
         <dependency>
@@ -73,6 +75,17 @@
             <artifactId>spotbugs</artifactId>
             <version>${spotbugs.version}</version>
             <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
         </dependency>
     </dependencies>
 
