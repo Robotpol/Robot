@@ -60,16 +60,17 @@ class BonitoScrapper implements BookstoreScrapper {
                         .get(0).getText().split(" ")[2]);
     }
 
-    private Book readBookInfo(WebElement bookElement) {
-        var title = bookElement.findElement(By.className("mb-2")).getText();
-        var authorPublisherSection = bookElement.findElements(
+    private Book readBookInfo(WebElement book) {
+        var title = book.findElement(By.className("mb-2")).getText();
+        var authorPublisherSection = book.findElements(
                 By.xpath(".//div[contains(@class, 'T2L') and contains(@class, 'color-dark')]"));
         var author = authorPublisherSection.get(0).getText();
-        var oldPrice = bookElement.findElement(By.xpath(".//span[contains(@class, 'T2L') " +
+        var oldPrice = book.findElement(By.xpath(".//span[contains(@class, 'T2L') " +
                 "and contains(@class, 'text-line-through') and contains (@class, 'me-1')]")).getText();
-        var newPrice = bookElement.findElement(By.xpath(".//span[contains(@class, 'H3B') " +
+        var newPrice = book.findElement(By.xpath(".//span[contains(@class, 'H3B') " +
                 "and contains(@class, 'me-1')]")).getText();
+        var link = book.findElement(By.tagName("a")).getAttribute("href");
 
-        return new Book(title, author, transformPrice(oldPrice), transformPrice(newPrice));
+        return new Book(title, author, transformPrice(oldPrice), transformPrice(newPrice), link);
     }
 }
