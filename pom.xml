@@ -32,6 +32,7 @@
         <spotbugs.version>4.7.0</spotbugs.version>
         <selenium.version>4.2.1</selenium.version>
         <webdrivermanager.version>5.1.1</webdrivermanager.version>
+        <mockito-testng.version>0.4.23</mockito-testng.version>
     </properties>
     <dependencies>
         <dependency>
@@ -89,7 +90,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-testng</artifactId>
-            <version>0.4.23</version>
+            <version>${mockito-testng.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -114,6 +115,7 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin}</version>
             </plugin>
