@@ -28,7 +28,7 @@ public class BooksServiceTest {
         String author = "test";
         BigDecimal oldPrice = new BigDecimal(10);
         BigDecimal newPrice = new BigDecimal(1);
-        Book book = new Book(title, author, oldPrice, newPrice);
+        Book book = new Book(title, author, oldPrice, newPrice, "");
         Bookstore bookstore = Bookstore.BONITO;
         // when
         underTest.cacheBooks(bookstore, new Books(List.of(book)));
