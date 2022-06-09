@@ -1,12 +1,13 @@
 package robot;
 
-import java.util.ArrayList;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Dominik Żebracki
  */
+@Component
 final class BonitoBookMapper {
 
     static List<Book> toBook(List<BonitoBook> books) {
@@ -16,21 +17,21 @@ final class BonitoBookMapper {
                         b.getOldPrice(),
                         b.getPrice(),
                         b.getLink()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     static List<BonitoBook> toBonitoBook(List<Book> books) {
-        var idCounter = 1;
-        var bonitoBooks = new ArrayList<BonitoBook>();
-        for (Book book : books) {
-            bonitoBooks.add(new BonitoBook(
-                    String.valueOf(idCounter++),
-                    book.title(),
-                    book.author(),
-                    book.oldPrice(),
-                    book.price(),
-                    book.link()));
-        }
-        return bonitoBooks;
+        return books.stream()
+                .map(b -> BonitoBook.builder()
+                        .title(b.title())
+                        .author(b.author())
+                        .oldPrice(b.oldPrice())
+                        .price(b.price())
+                        .link(b.link())
+                        .build())
+                .toList();
+    }
+
+    private BonitoBookMapper() {
     }
 }
