@@ -24,7 +24,6 @@ class BonitoService implements BookProvider {
     public boolean updateBooks() {
         bonitoBookRepository.deleteAll();
         bonitoBookRepository.saveAll(BonitoBookMapper.toBonitoBook(bookstore.getScrapper().call().books()));
-        System.err.println("Bonito books updated");
         return true;
     }
 }

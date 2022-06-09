@@ -11,7 +11,6 @@ class GandalfService implements BookProvider{
     private final GandalfBookRepository gandalfBookRepository;
     private final Bookstore bookstore = Bookstore.GANDALF;
 
-
     GandalfService(GandalfBookRepository gandalfBookRepository) {
         this.gandalfBookRepository = gandalfBookRepository;
     }
@@ -25,7 +24,6 @@ class GandalfService implements BookProvider{
     public boolean updateBooks() {
         gandalfBookRepository.deleteAll();
         gandalfBookRepository.saveAll(GandalfBookMapper.toGandalfBook(bookstore.getScrapper().call().books()));
-        System.err.println("Gandalf books updated");
         return true;
     }
 }

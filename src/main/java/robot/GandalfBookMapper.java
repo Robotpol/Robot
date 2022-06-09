@@ -1,8 +1,6 @@
 package robot;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Dominik Żebracki
@@ -16,21 +14,20 @@ final class GandalfBookMapper {
                         b.getOldPrice(),
                         b.getPrice(),
                         b.getLink()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     static List<GandalfBook> toGandalfBook(List<Book> books) {
-        var idCounter = 1;
-        var gandalfBooks = new ArrayList<GandalfBook>();
-        for (Book book : books) {
-            gandalfBooks.add(new GandalfBook(
-                    String.valueOf(idCounter++),
-                    book.title(),
-                    book.author(),
-                    book.oldPrice(),
-                    book.price(),
-                    book.link()));
-        }
-        return gandalfBooks;
+        return books.stream()
+                .map(b -> GandalfBook.builder()
+                        .title(b.title())
+                        .author(b.title())
+                        .oldPrice(b.oldPrice())
+                        .price(b.price())
+                        .link(b.link())
+                        .build())
+                .toList();
     }
+
+    private GandalfBookMapper(){}
 }

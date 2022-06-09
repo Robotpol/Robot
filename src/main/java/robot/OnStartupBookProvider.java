@@ -20,7 +20,6 @@ class OnStartupBookProvider implements ApplicationListener<ContextRefreshedEvent
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        System.err.println("Invoked");
         bookProviders.forEach(BookProvider::updateBooks);
     }
 }
