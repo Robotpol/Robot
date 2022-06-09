@@ -20,7 +20,9 @@ class BonitoService implements BookProvider {
         return new Books(BonitoBookMapper.toBook(bookRepository.findAll()));
     }
 
-    void updateBooks() {
+    @Override
+    public boolean updateBooks() {
         bookRepository.saveAll(BonitoBookMapper.toBonitoBook(bookstore.getScrapper().call().books()));
+        return true;
     }
 }
