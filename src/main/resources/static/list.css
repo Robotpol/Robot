@@ -91,6 +91,19 @@ tbody td {
   text-align: center;
 }
 
+.discount {
+  width: 2vw;
+  text-align: center;
+}
+
+tbody .discount:after {
+  content: "%";
+}
+
+tbody .discount:before {
+  content: "-";
+}
+
 tbody .newPrice {
   font-weight: 900;
 }
