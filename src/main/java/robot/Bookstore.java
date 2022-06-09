@@ -1,19 +1,6 @@
 package robot;
 
-import robot.bonito.BonitoScrapper;
-import robot.gandalf.GandalfScrapper;
-
 public enum Bookstore {
-    GANDALF(new GandalfScrapper()),
-    BONITO(new BonitoScrapper());
-
-    private final BookstoreScrapper scrapper;
-
-    Bookstore(BookstoreScrapper scrapper) {
-        this.scrapper = scrapper;
-    }
-
-    public BookstoreScrapper getScrapper() {
-        return scrapper;
-    }
+    GANDALF,
+    BONITO
 }

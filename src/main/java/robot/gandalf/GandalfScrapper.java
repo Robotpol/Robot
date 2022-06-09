@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Mariusz Bal
  */
-public class GandalfScrapper implements BookstoreScrapper {
+class GandalfScrapper implements BookstoreScrapper {
 
     @Override
     public Books call() {
