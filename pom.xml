@@ -38,6 +38,7 @@
         <selenium.version>4.2.1</selenium.version>
         <webdrivermanager.version>5.1.1</webdrivermanager.version>
         <mockito-testng.version>0.4.23</mockito-testng.version>
+        <lombok.version>1.18.24</lombok.version>
     </properties>
 
     <profiles>
@@ -69,6 +70,10 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <exclusions>
                 <exclusion>
@@ -91,6 +96,12 @@
             <artifactId>testng</artifactId>
             <version>${testng.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
