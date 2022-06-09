@@ -8,21 +8,23 @@ import org.springframework.stereotype.Service;
 @Service
 class BonitoService implements BookProvider {
 
-    private final BonitoBookRepository bookRepository;
+    private final BonitoBookRepository bonitoBookRepository;
     private final Bookstore bookstore = Bookstore.BONITO;
 
     private BonitoService(BonitoBookRepository bookRepository) {
-        this.bookRepository = bookRepository;
+        this.bonitoBookRepository = bookRepository;
     }
 
     @Override
     public Books provideBooks() {
-        return new Books(BonitoBookMapper.toBook(bookRepository.findAll()));
+        return new Books(BonitoBookMapper.toBook(bonitoBookRepository.findAll()));
     }
 
     @Override
     public boolean updateBooks() {
-        bookRepository.saveAll(BonitoBookMapper.toBonitoBook(bookstore.getScrapper().call().books()));
+        bonitoBookRepository.deleteAll();
+        bonitoBookRepository.saveAll(BonitoBookMapper.toBonitoBook(bookstore.getScrapper().call().books()));
+        System.err.println("Bonito books updated");
         return true;
     }
 }
