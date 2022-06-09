@@ -20,6 +20,7 @@ jobs:
       - name: Push to DockerHub
         run: mvn package -P build-docker-image -Djib.to.auth.username=${{ secrets.DOCKER_USERNAME }} -Djib.to.auth.password=${{ secrets.DOCKER_PASSWORD }}
   deploy:
+    needs: [ push-dockerhub ]
     runs-on: ubuntu-latest
     steps:
       - name: executing remote ssh commands using password
