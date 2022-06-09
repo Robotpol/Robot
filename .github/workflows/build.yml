@@ -1,4 +1,4 @@
-name: Check if builds on push
+name: Build application
 
 on:
   push:
