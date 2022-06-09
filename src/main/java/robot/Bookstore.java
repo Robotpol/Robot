@@ -1,5 +1,8 @@
 package robot;
 
+import robot.bonito.BonitoScrapper;
+import robot.gandalf.GandalfScrapper;
+
 public enum Bookstore {
     GANDALF(new GandalfScrapperJsoup("https://www.gandalf.com.pl/promocje/bcb")),
     BONITO(new BonitoScrapperJsoup("https://bonito.pl/kategoria/ksiazki/?results=L3YxL3NlYXJjaC9wcm9kdWN0cy8/Y2F0ZWdvcnk9a3NpYXpraQ==&page="));

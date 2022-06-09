@@ -1,12 +1,14 @@
-package robot;
+package robot.gandalf;
 
 import org.springframework.stereotype.Service;
+import robot.Books;
+import robot.Bookstore;
 
 /**
  * @author Dominik Żebracki
  */
 @Service
-class GandalfService implements BookProvider{
+class GandalfService {
 
     private final GandalfBookRepository gandalfBookRepository;
     private final Bookstore bookstore = Bookstore.GANDALF;
@@ -15,13 +17,11 @@ class GandalfService implements BookProvider{
         this.gandalfBookRepository = gandalfBookRepository;
     }
 
-    @Override
-    public Books provideBooks() {
+    Books provideBooks() {
         return new Books(GandalfBookMapper.toBook(gandalfBookRepository.findAll()));
     }
 
-    @Override
-    public boolean updateBooks() {
+    boolean updateBooks() {
         gandalfBookRepository.deleteAll();
         gandalfBookRepository.saveAll(GandalfBookMapper.toGandalfBook(bookstore.getScrapper().call().books()));
         return true;

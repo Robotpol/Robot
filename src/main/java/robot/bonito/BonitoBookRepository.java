@@ -1,4 +1,4 @@
-package robot;
+package robot.bonito;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

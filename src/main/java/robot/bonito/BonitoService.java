@@ -1,12 +1,14 @@
-package robot;
+package robot.bonito;
 
 import org.springframework.stereotype.Service;
+import robot.Books;
+import robot.Bookstore;
 
 /**
  * @author Dominik Żebracki
  */
 @Service
-class BonitoService implements BookProvider {
+class BonitoService {
 
     private final BonitoBookRepository bonitoBookRepository;
     private final Bookstore bookstore = Bookstore.BONITO;
@@ -15,13 +17,12 @@ class BonitoService implements BookProvider {
         this.bonitoBookRepository = bookRepository;
     }
 
-    @Override
-    public Books provideBooks() {
+
+    Books provideBooks() {
         return new Books(BonitoBookMapper.toBook(bonitoBookRepository.findAll()));
     }
 
-    @Override
-    public boolean updateBooks() {
+    boolean updateBooks() {
         bonitoBookRepository.deleteAll();
         bonitoBookRepository.saveAll(BonitoBookMapper.toBonitoBook(bookstore.getScrapper().call().books()));
         return true;

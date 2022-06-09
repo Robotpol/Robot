@@ -1,10 +1,11 @@
-package robot;
+package robot.gandalf;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * @author Dominik Żebracki
@@ -14,7 +15,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @Builder
-class BonitoBook {
+class GandalfBook {
 
     @Id
     private String id;
@@ -23,4 +24,5 @@ class BonitoBook {
     private BigDecimal oldPrice;
     private BigDecimal price;
     private String link;
+    private LocalDateTime createdAt;
 }
