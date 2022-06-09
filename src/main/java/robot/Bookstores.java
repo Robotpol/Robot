@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 class Bookstores {
 
     private final Map<String, BookProvider> bookProviders;
+    // TODO replace with RDBMS
     private final Map<String, Books> bookstores;
 
     Bookstores(Set<BookProvider> bookProvidersRegisteredInContext) {
@@ -26,13 +27,9 @@ class Bookstores {
     }
 
     void update(String ... bookstoreName) {
-        var bookstoresToUpdate = Arrays.asList(bookstoreName);
-        var result = BookstoresCollector.collectFrom(bookstoresToUpdate.stream()
+        processCollectingResults(BookstoresCollector.collectFrom(Arrays.stream(bookstoreName)
                 .map(bookProviders::get)
-                .toList());
-        processCollectingResults(result);
-        System.out.println(result);
-        System.out.println("\n\n\n" + bookstores.get(bookstoreName[0]));
+                .toList()));
     }
 
     void updateAll() {
@@ -45,13 +42,7 @@ class Bookstores {
     }
 
     private void processCollectingResults(List<BookstoresCollector.CollectingResult> results) {
-       for(BookstoresCollector.CollectingResult result : results) {
-           if(!result.providerName().equals("")) {
-               System.out.println("putting" + result.providerName());
-               bookstores.remove(result.providerName());
-               bookstores.put(result.providerName(), result.books());
-           }
-        }
+        results.forEach(r -> bookstores.computeIfPresent(r.providerName(), (k, v) -> r.books()));
     }
 
     @Override
