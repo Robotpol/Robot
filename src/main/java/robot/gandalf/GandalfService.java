@@ -2,7 +2,7 @@ package robot.gandalf;
 
 import org.springframework.stereotype.Service;
 import robot.Books;
-import robot.Bookstore;
+import robot.BookstoreScrapper;
 
 /**
  * @author Dominik Żebracki
@@ -11,7 +11,7 @@ import robot.Bookstore;
 class GandalfService {
 
     private final GandalfBookRepository gandalfBookRepository;
-    private final Bookstore bookstore = Bookstore.GANDALF;
+    private final BookstoreScrapper scrapper = new GandalfScrapper();
 
     GandalfService(GandalfBookRepository gandalfBookRepository) {
         this.gandalfBookRepository = gandalfBookRepository;
@@ -23,7 +23,7 @@ class GandalfService {
 
     boolean updateBooks() {
         gandalfBookRepository.deleteAll();
-        gandalfBookRepository.saveAll(GandalfBookMapper.toGandalfBook(bookstore.getScrapper().call().books()));
+        gandalfBookRepository.saveAll(GandalfBookMapper.toGandalfBook(scrapper.call().books()));
         return true;
     }
 }

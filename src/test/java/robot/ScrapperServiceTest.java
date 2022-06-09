@@ -14,13 +14,13 @@ import java.util.Locale;
 public class ScrapperServiceTest {
 
     @Mock
-    private BooksService booksService;
+    private Bookstores bookstores;
 
     private ScrapperService underTest;
 
     @BeforeMethod
     public void setUp() {
-        underTest = new ScrapperService(booksService);
+        underTest = new ScrapperService(bookstores);
     }
 
     @Test

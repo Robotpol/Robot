@@ -23,10 +23,10 @@ class ScrapperService {
     private final ScheduledExecutorService executorService;
 
     private final List<ScrapperJob> jobs;
-    private final BooksService booksService;
+    private final Bookstores bookstores;
 
-    public ScrapperService(BooksService booksService) {
-        this.booksService = booksService;
+    public ScrapperService(Bookstores bookstores) {
+        this.bookstores = bookstores;
         this.executorService = Executors.newScheduledThreadPool(2);
         this.jobs = new LinkedList<>();
     }
@@ -39,8 +39,7 @@ class ScrapperService {
 
         Bookstore bookstore = Bookstore.valueOf(bookstoreName.toUpperCase(Locale.ROOT));
         Runnable taskWrapper = () -> {
-            Books call = bookstore.getScrapper().call();
-            booksService.cacheBooks(bookstore, call);
+            bookstores.update(bookstoreName.toUpperCase(Locale.ROOT));
             startExecutionAt(scrapperPostDto, 1);
         };
         long delay = computeNextDelay(daysOffset, targetHour, targetMin);

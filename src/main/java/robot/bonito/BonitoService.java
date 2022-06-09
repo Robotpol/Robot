@@ -2,7 +2,7 @@ package robot.bonito;
 
 import org.springframework.stereotype.Service;
 import robot.Books;
-import robot.Bookstore;
+import robot.BookstoreScrapper;
 
 /**
  * @author Dominik Żebracki
@@ -11,12 +11,11 @@ import robot.Bookstore;
 class BonitoService {
 
     private final BonitoBookRepository bonitoBookRepository;
-    private final Bookstore bookstore = Bookstore.BONITO;
+    private final BookstoreScrapper scrapper = new BonitoScrapper();
 
     private BonitoService(BonitoBookRepository bookRepository) {
         this.bonitoBookRepository = bookRepository;
     }
-
 
     Books provideBooks() {
         return new Books(BonitoBookMapper.toBook(bonitoBookRepository.findAll()));
@@ -24,7 +23,7 @@ class BonitoService {
 
     boolean updateBooks() {
         bonitoBookRepository.deleteAll();
-        bonitoBookRepository.saveAll(BonitoBookMapper.toBonitoBook(bookstore.getScrapper().call().books()));
+        bonitoBookRepository.saveAll(BonitoBookMapper.toBonitoBook(scrapper.call().books()));
         return true;
     }
 }
