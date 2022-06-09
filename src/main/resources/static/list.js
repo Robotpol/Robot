@@ -17,17 +17,17 @@ function requestBooks(library) {
 	  }
 	};
 	req.send(null);
+	document.getElementById('books').innerHTML = "";
 }
 
 function fillTable(books) {
 	var table = document.getElementById('books');
-	table.innerHTML = "";
 	for (var i = 0; i < books.length; i++) {
 		let tr = document.createElement("tr");
 		tr.appendChild(createTableCell(books[i].title, 'title'));
-		tr.appendChild(createTableCell(books[i].author, 'author'));
-		tr.appendChild(createTableCell(books[i].oldPrice, 'oldPrice'));
-		tr.appendChild(createTableCell(books[i].price, 'newPrice'));
+		tr.appendChild(createTableCell(((books[i].author.trim() == '') ? '-----' : books[i].author), 'author'));
+		tr.appendChild(createTableCell(parseFloat(books[i].oldPrice).toFixed(2), 'oldPrice'));
+		tr.appendChild(createTableCell(parseFloat(books[i].price).toFixed(2), 'newPrice'));
 		tr.appendChild(createLinkCell(createTableCell('', 'link'), books[i].link));
 		table.appendChild(tr);
 	}
@@ -41,7 +41,7 @@ function createTableCell(content, className) {
 }
 
 function createLinkCell(tableCell, link) {
-	tableCell.innerHTML = '<a href="' + link + '"><span class="material-icons">open_in_new</span></a>';
+	tableCell.innerHTML = '<a target="_blank" href="' + link + '"><span class="material-icons">open_in_new</span></a>';
 	return tableCell;
 }
 

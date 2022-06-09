@@ -56,6 +56,11 @@ tbody > tr {
   line-height: 1.4;
 }
 
+tbody > tr:hover {
+  background-color: #e3effa;
+  transition: 0.5s;
+}
+
 tbody td {
   font-family: Lato-Regular;
   font-size: 15px;
@@ -84,6 +89,10 @@ tbody td {
 .newPrice {
   width: 3vw;
   text-align: center;
+}
+
+tbody .newPrice {
+  font-weight: 900;
 }
 
 .link {
