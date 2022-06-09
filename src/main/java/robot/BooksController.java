@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1/books")
 public class BooksController {
 
-    private final BooksService booksService;
+    private final Bookstores bookstores;
 
-    public BooksController(BooksService booksService) {
-        this.booksService = booksService;
+    public BooksController(Bookstores bookstores) {
+        this.bookstores = bookstores;
     }
 
     @GetMapping("{bookstore}")
     ResponseEntity<Books> getBooks(
             @PathVariable String bookstore
     ) {
-        Books books = booksService.getBooks(bookstore);
+        Books books = bookstores.getBooks(bookstore);
         return ResponseEntity.ok(books);
     }
 

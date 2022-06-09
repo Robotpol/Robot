@@ -2,9 +2,7 @@ package robot;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -27,16 +25,33 @@ class Bookstores {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    void update(String bookstoreName) {
-        bookstores.put(bookstoreName, bookProviders.get(bookstoreName).updateAndProvideBooks());
+    void update(String ... bookstoreName) {
+        var bookstoresToUpdate = Arrays.asList(bookstoreName);
+        var result = BookstoresCollector.collectFrom(bookstoresToUpdate.stream()
+                .map(bookProviders::get)
+                .toList());
+        processCollectingResults(result);
+        System.out.println(result);
+        System.out.println("\n\n\n" + bookstores.get(bookstoreName[0]));
     }
 
     void updateAll() {
-        bookstores.keySet().forEach(this::update);
+        processCollectingResults(BookstoresCollector.collectFrom(bookProviders.values().stream().toList()));
+        System.out.println(bookstores);
     }
 
     Books getBooks(String bookstoreName) {
-        return bookstores.get(bookstoreName);
+        return bookstores.get(bookstoreName.toUpperCase(Locale.ROOT));
+    }
+
+    private void processCollectingResults(List<BookstoresCollector.CollectingResult> results) {
+       for(BookstoresCollector.CollectingResult result : results) {
+           if(!result.providerName().equals("")) {
+               System.out.println("putting" + result.providerName());
+               bookstores.remove(result.providerName());
+               bookstores.put(result.providerName(), result.books());
+           }
+        }
     }
 
     @Override
