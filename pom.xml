@@ -10,36 +10,37 @@
     </parent>
     <groupId>org.robotpol</groupId>
     <artifactId>robot</artifactId>
-    <version>0.0.1</version>
+    <version>0.2.1</version>
     <name>Robot</name>
 
     <properties>
-        <version.maven>3.6.2</version.maven>
         <project.version.java>17</project.version.java>
         <sonar.organization>robotpol</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
-        <maven.compiler.source>${project.version.java}</maven.compiler.source>
-        <maven.compiler.target>${project.version.java}</maven.compiler.target>
-        <maven.compiler.plugin>3.10.1</maven.compiler.plugin>
-        <maven.dependency.plugin.version>3.3.0</maven.dependency.plugin.version>
-        <maven.jacoco.plugin>0.8.7</maven.jacoco.plugin>
+        <maven.compiler.release>17</maven.compiler.release>
+
+        <version.plugin.maven.dependency>3.3.0</version.plugin.maven.dependency>
+        <version.plugin.maven.spotbugs>4.7.0.0</version.plugin.maven.spotbugs>
+        <version.plugin.maven.jacoco>0.8.7</version.plugin.maven.jacoco>
+        <version.plugin.maven.enforcer>3.0.0</version.plugin.maven.enforcer>
+        <version.plugin.maven.compiler>3.10.1</version.plugin.maven.compiler>
+
+        <version.maven>3.8.5</version.maven>
         <testng.version>7.5</testng.version>
-        <spotbugs-maven-plugin.version>4.7.0.0</spotbugs-maven-plugin.version>
-        <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
         <jcip-annotations.version>1.0</jcip-annotations.version>
         <spotbugs.version>4.7.0</spotbugs.version>
         <selenium.version>4.2.1</selenium.version>
         <webdrivermanager.version>5.1.1</webdrivermanager.version>
         <mockito-testng.version>0.4.23</mockito-testng.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -100,7 +101,7 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>${spotbugs-maven-plugin.version}</version>
+                <version>${version.plugin.maven.spotbugs}</version>
                 <configuration>
                     <omitVisitors>ThrowingExceptions</omitVisitors>
                 </configuration>
@@ -117,12 +118,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin}</version>
+                <version>${version.plugin.maven.compiler}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>${maven-enforcer-plugin.version}</version>
+                <version>${version.plugin.maven.enforcer}</version>
                 <executions>
                     <execution>
                         <id>enforce-rules</id>
@@ -150,7 +151,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>${maven.dependency.plugin.version}</version>
+                <version>${version.plugin.maven.dependency}</version>
                 <executions>
                     <execution>
                         <id>copy-dependencies</id>
@@ -164,7 +165,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${maven.jacoco.plugin}</version>
+                <version>${version.plugin.maven.jacoco}</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
