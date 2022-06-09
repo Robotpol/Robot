@@ -5,7 +5,7 @@ name: Run tests
 
 on:
   pull_request:
-    branches: [ opened, synchronize, reopened, main ]
+    branches: [ main ]
 
 jobs:
 
