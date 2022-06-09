@@ -18,7 +18,7 @@ jobs:
           distribution: 'corretto'
           cache: 'maven'
       - name: Push to DockerHub
-        run: mvn install -P build-docker-image -Djib.to.auth.username=${{ secrets.DOCKER_USERNAME }} -Djib.to.auth.password=${{ secrets.DOCKER_PASSWORD }}
+        run: mvn package -P build-docker-image -Djib.to.auth.username=${{ secrets.DOCKER_USERNAME }} -Djib.to.auth.password=${{ secrets.DOCKER_PASSWORD }}
   deploy:
     runs-on: ubuntu-latest
     steps:
