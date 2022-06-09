@@ -1,13 +1,12 @@
 package robot;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.math.BigDecimal;
 import java.util.concurrent.Callable;
 
 /**
  * @author Dominik Żebracki
  */
+@FunctionalInterface
 interface BookstoreScrapper extends Callable<Books> {
     Books call();
 

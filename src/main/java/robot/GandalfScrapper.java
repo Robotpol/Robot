@@ -70,11 +70,13 @@ class GandalfScrapper implements BookstoreScrapper {
     }
 
     private Book readBookInfo(WebElement book) {
-        var title = book.findElement(By.className("title")).getText();
+        var titleElement = book.findElement(By.className("title"));
+        var title = titleElement.getText();
         var author = book.findElement(By.className("author")).getText();
         var oldPrice = book.findElement(By.className("old-price")).getText();
         var newPrice = book.findElement(By.className("current-price")).getText();
+        var link = titleElement.getAttribute("href");
 
-        return new Book(title, author, transformPrice(oldPrice), transformPrice(newPrice));
+        return new Book(title, author, transformPrice(oldPrice), transformPrice(newPrice), link);
     }
 }

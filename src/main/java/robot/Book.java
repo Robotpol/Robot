@@ -9,5 +9,6 @@ record Book(
         String title,
         String author,
         BigDecimal oldPrice,
-        BigDecimal price) {
+        BigDecimal price,
+        String link) {
 }
