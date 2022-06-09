@@ -1,5 +1,8 @@
-package robot;
+package robot.gandalf;
 
+import robot.Book;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -18,6 +21,7 @@ final class GandalfBookMapper {
     }
 
     static List<GandalfBook> toGandalfBook(List<Book> books) {
+        var currentTime = LocalDateTime.now();
         return books.stream()
                 .map(b -> GandalfBook.builder()
                         .title(b.title())
@@ -25,6 +29,7 @@ final class GandalfBookMapper {
                         .oldPrice(b.oldPrice())
                         .price(b.price())
                         .link(b.link())
+                        .createdAt(currentTime)
                         .build())
                 .toList();
     }

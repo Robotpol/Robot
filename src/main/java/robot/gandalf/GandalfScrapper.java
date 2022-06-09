@@ -1,4 +1,4 @@
-package robot;
+package robot.gandalf;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
@@ -9,6 +9,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import robot.Book;
+import robot.Books;
+import robot.BookstoreScrapper;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -19,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Mariusz Bal
  */
-class GandalfScrapper implements BookstoreScrapper {
+public class GandalfScrapper implements BookstoreScrapper {
 
     @Override
     public Books call() {

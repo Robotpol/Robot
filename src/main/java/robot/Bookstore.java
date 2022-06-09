@@ -1,5 +1,8 @@
 package robot;
 
+import robot.bonito.BonitoScrapper;
+import robot.gandalf.GandalfScrapper;
+
 public enum Bookstore {
     GANDALF(new GandalfScrapper()),
     BONITO(new BonitoScrapper());

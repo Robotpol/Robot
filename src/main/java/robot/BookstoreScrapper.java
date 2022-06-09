@@ -10,7 +10,7 @@ import java.util.concurrent.Callable;
  * @author Dominik Żebracki
  */
 @FunctionalInterface
-interface BookstoreScrapper extends Callable<Books> {
+public interface BookstoreScrapper extends Callable<Books> {
     Books call();
 
     default void waitForPageLoad(WebDriver driver) {
