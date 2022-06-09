@@ -25,4 +25,15 @@ public class Gandalf implements BookProvider {
     public boolean updateBooks() {
         return gandalfService.updateBooks();
     }
+
+    @Override
+    public Books updateAndProvideBooks() {
+       gandalfService.updateBooks();
+       return gandalfService.provideBooks();
+    }
+
+    @Override
+    public String toString() {
+       return "GANDALF";
+    }
 }

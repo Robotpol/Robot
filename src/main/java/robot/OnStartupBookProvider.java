@@ -4,22 +4,21 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 /**
  * @author Dominik Żebracki
  */
 @Component
 class OnStartupBookProvider implements ApplicationListener<ContextRefreshedEvent> {
 
-    private final List<BookProvider> bookProviders;
+    private final Bookstores bookstores;
 
-    OnStartupBookProvider(List<BookProvider> bookProviders) {
-        this.bookProviders = bookProviders;
+    OnStartupBookProvider(Bookstores bookstores) {
+        this.bookstores = bookstores;
     }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        bookProviders.forEach(BookProvider::updateBooks);
+        bookstores.updateAll();
+        System.out.println(bookstores);
     }
 }

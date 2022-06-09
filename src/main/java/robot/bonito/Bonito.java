@@ -25,4 +25,15 @@ public class Bonito implements BookProvider {
     public boolean updateBooks() {
         return bonitoService.updateBooks();
     }
+
+    @Override
+    public Books updateAndProvideBooks() {
+       bonitoService.updateBooks();
+       return bonitoService.provideBooks();
+    }
+
+    @Override
+    public String toString() {
+       return "BONITO";
+    }
 }
