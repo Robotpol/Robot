@@ -50,7 +50,7 @@
                         <artifactId>jib-maven-plugin</artifactId>
                         <executions>
                             <execution>
-                                <phase>package</phase>
+                                <phase>install</phase>
                                 <goals>
                                     <goal>build</goal>
                                 </goals>
@@ -148,14 +148,6 @@
                         </tags>
                     </to>
                 </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
