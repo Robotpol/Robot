@@ -25,6 +25,12 @@ class BonitoScrapper implements BookstoreScrapper {
         WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments(List.of("--no-sandbox", "--headless", "--disable-gpu")));
         driver.get("https://bonito.pl/kategoria/ksiazki/?sale=1");
 
+        try {
+            TimeUnit.SECONDS.sleep(20);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         int pages = findPageCount(driver);
         List<Book> books = new ArrayList<>();
         loopPages(driver, pages, books);
