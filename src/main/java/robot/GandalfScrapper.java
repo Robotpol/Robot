@@ -14,6 +14,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Mariusz Bal
@@ -38,11 +39,15 @@ class GandalfScrapper implements BookstoreScrapper {
 
     private void loopPages(WebDriver driver, int pages, List<Book> books) {
         for (int i = 0; i < 10; i++) {
-            waitForBooksToLoad(driver);
             var booksSection = driver.findElement(By.id("list-of-filter-products"));
             var booksElements = booksSection.findElements(By.className("info-box"));
             booksElements.stream().map(this::tryBookScrap).filter(Objects::nonNull).forEach(books::add);
             clickNextPage(driver);
+            try {
+                TimeUnit.SECONDS.sleep(20);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -76,7 +81,7 @@ class GandalfScrapper implements BookstoreScrapper {
         var oldPrice = book.findElement(By.className("old-price")).getText();
         var newPrice = book.findElement(By.className("current-price")).getText();
         var link = titleElement.getAttribute("href");
-        System.out.println(title);
+        System.out.println("[GANDALF]: " + title);
         return new Book(title, author, transformPrice(oldPrice), transformPrice(newPrice), link);
     }
 }
