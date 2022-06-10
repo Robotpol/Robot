@@ -34,7 +34,6 @@ class Bookstores {
 
     void updateAll() {
         processCollectingResults(BookstoresCollector.collectFrom(bookProviders.values().stream().toList()));
-        System.out.println(bookstores);
     }
 
     Books getBooks(String bookstoreName) {
