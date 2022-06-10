@@ -24,7 +24,6 @@ class BonitoScrapper implements BookstoreScrapper {
         driver.get("https://bonito.pl/kategoria/ksiazki/?sale=1");
 
         int pages = findPageCount(driver);
-        System.out.println(pages);
         List<Book> books = new ArrayList<>();
         loopPages(driver, pages, books);
 

@@ -23,7 +23,7 @@ class GandalfScrapper implements BookstoreScrapper {
     @Override
     public Books call() {
         WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments(List.of("--headless", "--disable-gpu")));
+        WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments(List.of("--no-sandbox", "--headless", "--disable-gpu")));
         driver.get("https://www.gandalf.com.pl/promocje/bcb");
 
         int pages = findPageCount(driver);
