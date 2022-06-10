@@ -1,6 +1,4 @@
 spring:
   data:
     mongodb:
-        host: localhost
-        port: 27017
-        database: bookstores
+       uri: mongodb://user:user@167.99.134.145:27017/scrappers
