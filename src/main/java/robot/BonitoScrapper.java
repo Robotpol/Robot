@@ -28,7 +28,7 @@ class BonitoScrapper implements BookstoreScrapper {
         try {
             TimeUnit.SECONDS.sleep(20);
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Thread.currentThread().interrupt();
         }
 
         int pages = findPageCount(driver);
@@ -47,7 +47,7 @@ class BonitoScrapper implements BookstoreScrapper {
             try {
                 TimeUnit.SECONDS.sleep(20);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                Thread.currentThread().interrupt();
             }
         }
     }
