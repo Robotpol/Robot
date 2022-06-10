@@ -11,10 +11,16 @@ import robot.BookstoreScrapper;
 class GandalfService {
 
     private final GandalfBookRepository gandalfBookRepository;
-    private final BookstoreScrapper scrapper = new GandalfScrapper();
+    private final BookstoreScrapper scrapper;
 
     GandalfService(GandalfBookRepository gandalfBookRepository) {
         this.gandalfBookRepository = gandalfBookRepository;
+        scrapper = new GandalfScrapper();
+    }
+
+    GandalfService(GandalfBookRepository gandalfBookRepository, GandalfScrapper bookstoreScrapper) {
+        this.gandalfBookRepository = gandalfBookRepository;
+        this.scrapper = bookstoreScrapper;
     }
 
     Books provideBooks() {
