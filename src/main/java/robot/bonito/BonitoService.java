@@ -1,5 +1,6 @@
 package robot.bonito;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import robot.Books;
 import robot.BookstoreScrapper;
@@ -13,6 +14,7 @@ class BonitoService {
     private final BonitoBookRepository bonitoBookRepository;
     private final BookstoreScrapper scrapper;
 
+    @Autowired
     BonitoService(BonitoBookRepository bookRepository) {
         this.bonitoBookRepository = bookRepository;
         this.scrapper = new BonitoScrapper();
