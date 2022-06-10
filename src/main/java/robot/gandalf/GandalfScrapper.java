@@ -1,4 +1,4 @@
-package robot;
+package robot.gandalf;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
@@ -7,8 +7,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import robot.Book;
+import robot.Books;
+import robot.BookstoreScrapper;
 
-import java.time.temporal.ChronoUnit;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,17 +22,17 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Mariusz Bal
  */
-class BonitoScrapper implements BookstoreScrapper {
+class GandalfScrapper implements BookstoreScrapper {
 
     @Override
     public Books call() {
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments(List.of("--no-sandbox", "--headless", "--disable-gpu")));
-        driver.get("https://bonito.pl/kategoria/ksiazki/?sale=1");
-
+        driver.get("https://www.gandalf.com.pl/promocje/bcb");
         waitForPageLoad(driver);
 
         int pages = findPageCount(driver);
+
         List<Book> books = new ArrayList<>();
         loopPages(driver, pages, books);
 
@@ -35,10 +40,12 @@ class BonitoScrapper implements BookstoreScrapper {
         return new Books(books);
     }
 
+
     private void loopPages(WebDriver driver, int pages, List<Book> books) {
         for (int i = 0; i < 10; i++) {
             waitForPageLoad(driver);
-            var booksElements = driver.findElements(By.className("product_box"));
+            var booksSection = driver.findElement(By.id("list-of-filter-products"));
+            var booksElements = booksSection.findElements(By.className("info-box"));
             booksElements.stream().map(this::tryBookScrap).filter(Objects::nonNull).forEach(books::add);
             clickNextPage(driver);
         }
@@ -54,27 +61,21 @@ class BonitoScrapper implements BookstoreScrapper {
     }
 
     private void clickNextPage(WebDriver driver) {
-        driver.findElements(By.xpath("//img[contains(@src,'arrow-right-grey.svg')]")).get(0).click();
+        driver.findElement(By.className("next")).click();
     }
 
     private int findPageCount(WebDriver driver) {
-        return Integer.parseInt(
-                driver.findElements(By.xpath("//div[contains(@class, 'H4L') " +
-                                "and contains(@class, 'color-light') and contains(@class, 'text-nowrap')]"))
-                        .get(0).getText().split(" ")[2]);
+        return Integer.parseInt(driver.findElements(By.className("max-pages")).get(0).getText());
     }
 
     private Book readBookInfo(WebElement book) {
-        var title = book.findElement(By.className("mb-2")).getText();
-        var authorPublisherSection = book.findElements(
-                By.xpath(".//div[contains(@class, 'T2L') and contains(@class, 'color-dark')]"));
-        var author = authorPublisherSection.get(0).getText();
-        var oldPrice = book.findElement(By.xpath(".//span[contains(@class, 'T2L') " +
-                "and contains(@class, 'text-line-through') and contains (@class, 'me-1')]")).getText();
-        var newPrice = book.findElement(By.xpath(".//span[contains(@class, 'H3B') " +
-                "and contains(@class, 'me-1')]")).getText();
-        var link = book.findElement(By.tagName("a")).getAttribute("href");
-        System.out.println("[BONITO]: " + title);
+        var titleElement = book.findElement(By.className("title"));
+        var title = titleElement.getText();
+        var author = book.findElement(By.className("author")).getText();
+        var oldPrice = book.findElement(By.className("old-price")).getText();
+        var newPrice = book.findElement(By.className("current-price")).getText();
+        var link = titleElement.getAttribute("href");
+        System.out.println("[GANDALF]: " + title);
         return new Book(title, author, transformPrice(oldPrice), transformPrice(newPrice), link);
     }
 }
