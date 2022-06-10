@@ -8,9 +8,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Mariusz Bal
@@ -20,11 +22,12 @@ class BonitoScrapper implements BookstoreScrapper {
     @Override
     public Books call() {
         WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments(List.of("--headless", "--disable-gpu")));
+        WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments(List.of("--no-sandbox", "--headless", "--disable-gpu")));
         driver.get("https://bonito.pl/kategoria/ksiazki/?sale=1");
 
-        int pages = findPageCount(driver);
+        waitForPageLoad(driver);
 
+        int pages = findPageCount(driver);
         List<Book> books = new ArrayList<>();
         loopPages(driver, pages, books);
 
@@ -34,6 +37,7 @@ class BonitoScrapper implements BookstoreScrapper {
 
     private void loopPages(WebDriver driver, int pages, List<Book> books) {
         for (int i = 0; i < 10; i++) {
+            waitForPageLoad(driver);
             var booksElements = driver.findElements(By.className("product_box"));
             booksElements.stream().map(this::tryBookScrap).filter(Objects::nonNull).forEach(books::add);
             clickNextPage(driver);
@@ -70,7 +74,7 @@ class BonitoScrapper implements BookstoreScrapper {
         var newPrice = book.findElement(By.xpath(".//span[contains(@class, 'H3B') " +
                 "and contains(@class, 'me-1')]")).getText();
         var link = book.findElement(By.tagName("a")).getAttribute("href");
-
+        System.out.println("[BONITO]: " + title);
         return new Book(title, author, transformPrice(oldPrice), transformPrice(newPrice), link);
     }
 }

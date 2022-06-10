@@ -147,6 +147,17 @@
                             <tag>latest</tag>
                         </tags>
                     </to>
+                    <container>
+                      <entrypoint>/docker-entrypoint.sh</entrypoint>
+                    </container>
+                    <extraDirectories>
+                      <permissions>
+                        <permission>
+                          <file>/docker-entrypoint.sh</file>
+                          <mode>755</mode>
+                        </permission>
+                      </permissions>
+                    </extraDirectories>
                 </configuration>
             </plugin>
             <plugin>
