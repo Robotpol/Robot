@@ -1,4 +1,4 @@
-var BASE_URL = "http://localhost:8080/api/v1/";
+var BASE_URL = "http://67.207.76.109:8080/api/v1/";
 
 var BOOKSTORE = {
     BONITO: "bonito",
@@ -28,6 +28,8 @@ function fillTable(books) {
 		tr.appendChild(createTableCell(((books[i].author.trim() == '') ? '-----' : books[i].author), 'author'));
 		tr.appendChild(createTableCell(parseFloat(books[i].oldPrice).toFixed(2), 'oldPrice'));
 		tr.appendChild(createTableCell(parseFloat(books[i].price).toFixed(2), 'newPrice'));
+		let discount = 100 - (parseFloat(books[i].price) / parseFloat(books[i].oldPrice)) * 100;
+		tr.appendChild(createTableCell(discount.toFixed(0), 'discount'));
 		tr.appendChild(createLinkCell(createTableCell('', 'link'), books[i].link));
 		table.appendChild(tr);
 	}
