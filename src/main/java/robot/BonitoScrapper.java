@@ -8,9 +8,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Mariusz Bal
@@ -36,6 +38,11 @@ class BonitoScrapper implements BookstoreScrapper {
             var booksElements = driver.findElements(By.className("product_box"));
             booksElements.stream().map(this::tryBookScrap).filter(Objects::nonNull).forEach(books::add);
             clickNextPage(driver);
+            try {
+                TimeUnit.SECONDS.sleep(20);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

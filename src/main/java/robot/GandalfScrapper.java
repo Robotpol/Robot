@@ -60,7 +60,7 @@ class GandalfScrapper implements BookstoreScrapper {
     }
 
     private void waitForBooksToLoad(WebDriver driver) {
-        new WebDriverWait(driver, Duration.ofSeconds(8))
+        new WebDriverWait(driver, Duration.ofSeconds(20))
                 .until(ExpectedConditions.domPropertyToBe(driver.findElement(By.id("list-of-filter-products")),
                         "className", ""));
     }
