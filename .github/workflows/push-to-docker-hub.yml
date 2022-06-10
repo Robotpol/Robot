@@ -3,9 +3,6 @@ name: Deploy application
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
 
 jobs:
   push-dockerhub:
