@@ -26,6 +26,7 @@ class GandalfScrapper implements BookstoreScrapper {
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments(List.of("--no-sandbox", "--headless", "--disable-gpu")));
         driver.get("https://www.gandalf.com.pl/promocje/bcb");
+        waitForPageLoad(driver);
 
         int pages = findPageCount(driver);
 
@@ -39,7 +40,7 @@ class GandalfScrapper implements BookstoreScrapper {
 
     private void loopPages(WebDriver driver, int pages, List<Book> books) {
         for (int i = 0; i < 10; i++) {
-            waitForBooksToLoad(driver);
+            waitForPageLoad(driver);
             var booksSection = driver.findElement(By.id("list-of-filter-products"));
             var booksElements = booksSection.findElements(By.className("info-box"));
             booksElements.stream().map(this::tryBookScrap).filter(Objects::nonNull).forEach(books::add);
@@ -58,12 +59,6 @@ class GandalfScrapper implements BookstoreScrapper {
 
     private void clickNextPage(WebDriver driver) {
         driver.findElement(By.className("next")).click();
-    }
-
-    private void waitForBooksToLoad(WebDriver driver) {
-        new WebDriverWait(driver, Duration.ofSeconds(20))
-                .until(ExpectedConditions.domPropertyToBe(driver.findElement(By.id("list-of-filter-products")),
-                        "className", ""));
     }
 
     private int findPageCount(WebDriver driver) {

@@ -25,11 +25,7 @@ class BonitoScrapper implements BookstoreScrapper {
         WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments(List.of("--no-sandbox", "--headless", "--disable-gpu")));
         driver.get("https://bonito.pl/kategoria/ksiazki/?sale=1");
 
-        try {
-            TimeUnit.SECONDS.sleep(20);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        waitForPageLoad(driver);
 
         int pages = findPageCount(driver);
         List<Book> books = new ArrayList<>();
@@ -41,14 +37,10 @@ class BonitoScrapper implements BookstoreScrapper {
 
     private void loopPages(WebDriver driver, int pages, List<Book> books) {
         for (int i = 0; i < 10; i++) {
+            waitForPageLoad(driver);
             var booksElements = driver.findElements(By.className("product_box"));
             booksElements.stream().map(this::tryBookScrap).filter(Objects::nonNull).forEach(books::add);
             clickNextPage(driver);
-            try {
-                TimeUnit.SECONDS.sleep(20);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
         }
     }
 
