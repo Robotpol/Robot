@@ -43,11 +43,6 @@ class GandalfScrapper implements BookstoreScrapper {
             var booksElements = booksSection.findElements(By.className("info-box"));
             booksElements.stream().map(this::tryBookScrap).filter(Objects::nonNull).forEach(books::add);
             clickNextPage(driver);
-            try {
-                TimeUnit.SECONDS.sleep(20);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
