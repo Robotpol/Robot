@@ -18,6 +18,6 @@ class OnStartupBookProvider implements ApplicationListener<ContextRefreshedEvent
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        bookstores.updateAll();
+        //bookstores.updateAll();
     }
 }
