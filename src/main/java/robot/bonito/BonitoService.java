@@ -11,10 +11,16 @@ import robot.BookstoreScrapper;
 class BonitoService {
 
     private final BonitoBookRepository bonitoBookRepository;
-    private final BookstoreScrapper scrapper = new BonitoScrapper();
+    private final BookstoreScrapper scrapper;
 
-    private BonitoService(BonitoBookRepository bookRepository) {
+    BonitoService(BonitoBookRepository bookRepository) {
         this.bonitoBookRepository = bookRepository;
+        this.scrapper = new BonitoScrapper();
+    }
+
+    BonitoService(BonitoBookRepository bookRepository, BookstoreScrapper scrapper) {
+        this.bonitoBookRepository = bookRepository;
+        this.scrapper = scrapper;
     }
 
     Books provideBooks() {
