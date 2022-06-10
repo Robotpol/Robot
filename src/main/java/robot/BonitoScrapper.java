@@ -69,7 +69,7 @@ class BonitoScrapper implements BookstoreScrapper {
         var newPrice = book.findElement(By.xpath(".//span[contains(@class, 'H3B') " +
                 "and contains(@class, 'me-1')]")).getText();
         var link = book.findElement(By.tagName("a")).getAttribute("href");
-
+        System.out.println(title);
         return new Book(title, author, transformPrice(oldPrice), transformPrice(newPrice), link);
     }
 }

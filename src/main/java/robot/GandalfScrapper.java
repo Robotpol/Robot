@@ -76,7 +76,7 @@ class GandalfScrapper implements BookstoreScrapper {
         var oldPrice = book.findElement(By.className("old-price")).getText();
         var newPrice = book.findElement(By.className("current-price")).getText();
         var link = titleElement.getAttribute("href");
-
+        System.out.println(title);
         return new Book(title, author, transformPrice(oldPrice), transformPrice(newPrice), link);
     }
 }
