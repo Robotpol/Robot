@@ -17,12 +17,13 @@ interface BookstoreScrapper extends Callable<Books> {
         while (true) {
             JavascriptExecutor js = (JavascriptExecutor) driver;
             String result = js.executeScript("return document.readyState").toString();
-            if (!result.equals("complete")) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
+            if (result.equals("complete")) {
+                break;
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
         }
     }
