@@ -1,5 +1,6 @@
 package robot.gandalf;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import robot.Books;
 import robot.BookstoreScrapper;
@@ -13,6 +14,7 @@ class GandalfService {
     private final GandalfBookRepository gandalfBookRepository;
     private final BookstoreScrapper scrapper;
 
+    @Autowired
     GandalfService(GandalfBookRepository gandalfBookRepository) {
         this.gandalfBookRepository = gandalfBookRepository;
         scrapper = new GandalfScrapper();
