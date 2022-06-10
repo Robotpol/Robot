@@ -39,6 +39,7 @@ class GandalfScrapper implements BookstoreScrapper {
 
     private void loopPages(WebDriver driver, int pages, List<Book> books) {
         for (int i = 0; i < 10; i++) {
+        waitForBooksToLoad(driver);
             var booksSection = driver.findElement(By.id("list-of-filter-products"));
             var booksElements = booksSection.findElements(By.className("info-box"));
             booksElements.stream().map(this::tryBookScrap).filter(Objects::nonNull).forEach(books::add);
