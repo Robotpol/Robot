@@ -1,8 +1,8 @@
 package robot;
 
 public enum Bookstore {
-    GANDALF(new GandalfScrapper()),
-    BONITO(new BonitoScrapper());
+    GANDALF(new GandalfScrapperJsoup()),
+    BONITO(new BonitoScrapperJsoup());
 
     private final BookstoreScrapper scrapper;
 
