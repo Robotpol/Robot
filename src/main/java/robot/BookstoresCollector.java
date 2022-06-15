@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
-import java.util.stream.Collectors;
 
 /**
  * @author Dominik Żebracki
@@ -12,31 +11,34 @@ import java.util.stream.Collectors;
 class BookstoresCollector {
 
     private static final int DEFAULT_TIMEOUT_IN_MINUTES = 8;
+    //TODO add a logger to log exceptions
 
-    static ArrayList<CollectingResult> collectFrom(List<BookProvider> bookProviders) {
+    static List<CollectingResult> collectFrom(List<BookProvider> bookProviders) throws CollectingException {
+        var executor = Executors.newFixedThreadPool(bookProviders.size());
+        var tasks = createTasks(bookProviders, executor);
         try {
-            var tasks = createTasks(bookProviders);
             return CompletableFuture.allOf(tasks.toArray(new CompletableFuture[0]))
                     .thenApply(f -> tasks.stream()
                             .map(CompletableFuture::join)
-                            .collect(Collectors.toCollection(ArrayList::new)))
+                            .toList())
                     .get(DEFAULT_TIMEOUT_IN_MINUTES, TimeUnit.MINUTES);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
-            Thread.currentThread().interrupt();
-            // TODO add proper exception handling
-            throw new RuntimeException("Error occurred during collecting books", e);
+            System.err.println("Error occurred during collecting books");
+            throw new CollectingException("Error occurred during collecting books", e);
+        } finally {
+            executor.shutdown();
         }
     }
 
-    private static List<CompletableFuture<CollectingResult>> createTasks(List<BookProvider> bookProviders) {
+    private static List<CompletableFuture<CollectingResult>> createTasks(List<BookProvider> bookProviders,
+                                                                         ExecutorService executor) {
         return bookProviders.stream()
                 .map(s -> CompletableFuture.supplyAsync(
-                        () -> new CollectingResult(s.toString(), LocalDateTime.now(), s.updateAndProvideBooks()),
-                                Executors.newCachedThreadPool())
+                        () -> new CollectingResult(s.toString(), LocalDateTime.now(), s.updateAndProvideBooks()), executor)
                         .exceptionally(BookstoresCollector::handleException))
                 .toList();
     }
-// TODO add proper exception handling
+
     private static CollectingResult handleException(Throwable ex) {
         System.err.println("Error occurred in a scrapper " + ex.getMessage());
         return new CollectingResult("", LocalDateTime.now(), new Books(new ArrayList<>()));

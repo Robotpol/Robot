@@ -27,13 +27,21 @@ class Bookstores {
     }
 
     void update(String ... bookstoreName) {
-        processCollectingResults(BookstoresCollector.collectFrom(Arrays.stream(bookstoreName)
-                .map(bookProviders::get)
-                .toList()));
+        try {
+            processCollectingResults(BookstoresCollector.collectFrom(Arrays.stream(bookstoreName)
+                    .map(bookProviders::get)
+                    .toList()));
+        } catch (CollectingException e) {
+            //TODO add a proper logging message. User also should be probably notified so something should be returned.
+        }
     }
 
     void updateAll() {
-        processCollectingResults(BookstoresCollector.collectFrom(bookProviders.values().stream().toList()));
+        try {
+            processCollectingResults(BookstoresCollector.collectFrom(bookProviders.values().stream().toList()));
+        } catch (CollectingException e) {
+           //TODO add a proper logging message. User also should be probably notified so something should be returned.
+        }
     }
 
     Books getBooks(String bookstoreName) {
