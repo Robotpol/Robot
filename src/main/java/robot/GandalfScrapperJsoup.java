@@ -34,13 +34,13 @@ class GandalfScrapperJsoup implements BookstoreScrapper {
 
     private void loopPages(Document document, int pages, List<Book> books) throws IOException {
         for (int i = 0; i < 10; i++) {
-            System.out.println("[GANDALF] ---- Page #" + (i + 1));
+            printInfo(Bookstore.GANDALF, "---- Page #" + (i + 1));
             var booksSection = document.getElementById("list-of-filter-products");
             var booksElements = Objects.requireNonNull(booksSection).getElementsByClass("info-box");
             booksElements.stream().map(this::tryBookScrap).filter(Objects::nonNull).forEach(books::add);
             document = Jsoup.parse(new URL(url + (i + 1)), 10000);
         }
-        System.out.println("[GANDALF] ---- Done");
+        printInfo(Bookstore.GANDALF, "---- Done");
     }
 
     private Book tryBookScrap(Element book) {
@@ -63,7 +63,7 @@ class GandalfScrapperJsoup implements BookstoreScrapper {
         var oldPrice = book.getElementsByClass("old-price").text();
         var newPrice = book.getElementsByClass("current-price").text();
         var link = titleElement.attr("href");
-        System.out.println("[GANDALF]: " + title);
+        printInfo(Bookstore.GANDALF, title);
         return new Book(title, author, transformPrice(oldPrice), transformPrice(newPrice), link);
     }
 }

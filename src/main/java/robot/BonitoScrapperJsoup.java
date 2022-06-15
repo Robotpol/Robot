@@ -35,12 +35,12 @@ class BonitoScrapperJsoup implements BookstoreScrapper {
 
     private void loopPages(Document document, int pages, List<Book> books) throws IOException {
         for (int i = 0; i < 10; i++) {
-            System.out.println("[BONITO] ---- Page #" + (i + 1));
+            printInfo(Bookstore.BONITO, "---- Page #" + (i + 1));
             var booksElements = document.getElementsByClass("product_box");
             booksElements.stream().map(this::tryBookScrap).filter(Objects::nonNull).forEach(books::add);
             document = Jsoup.parse(new URL(url + (i + 2)), 10000);
         }
-        System.out.println("[BONITO] ---- Done");
+        printInfo(Bookstore.BONITO, "---- Done");
     }
 
     private Book tryBookScrap(Element book) {
@@ -67,7 +67,7 @@ class BonitoScrapperJsoup implements BookstoreScrapper {
         var newPrice = book.selectXpath(".//span[contains(@class, 'H3B') " +
                 "and contains(@class, 'me-1')]").text();
         var link = book.getElementsByTag("a").get(0).absUrl("href");
-        System.out.println("[BONITO]: " + title);
+        printInfo(Bookstore.BONITO, title);
         return new Book(title, author, transformPrice(oldPrice), transformPrice(newPrice), link);
     }
 }

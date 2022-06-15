@@ -32,6 +32,10 @@ interface BookstoreScrapper extends Callable<Books> {
         return new BigDecimal(replaceCommaInPrice(trimZl(price)));
     }
 
+    default void printInfo(Bookstore bookstore, String text) {
+        System.out.printf("[%s]: %s%n", bookstore.name(), text);
+    }
+
     private String trimZl(String price) {
         return price.replaceAll("[^\\d.,]", "");
     }
