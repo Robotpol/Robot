@@ -9,9 +9,9 @@ import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
 
-public class BookstoresTest {
+public class BookstoresTestIT {
 
-    private BookProvider bookProvider = new DummyProvider();
+    private final BookProvider bookProvider = new DummyProvider();
     private Bookstores bookstores;
 
     @BeforeMethod
@@ -20,7 +20,7 @@ public class BookstoresTest {
     }
 
     @Test
-    public void shouldretrieveBooks() {
+    public void shouldRetrieveBooks() {
         //given
         var expected = new Book("title", "author", BigDecimal.ONE, BigDecimal.TEN, "link");
         //when
