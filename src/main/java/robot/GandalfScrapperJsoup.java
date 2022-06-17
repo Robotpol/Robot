@@ -3,7 +3,6 @@ package robot;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.openqa.selenium.NoSuchElementException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,7 +23,7 @@ class GandalfScrapperJsoup implements BookstoreScrapper {
             Document document = Jsoup.parse(new URL(url), 10000);
             int pages = findPageCount(document);
             List<Book> books = new ArrayList<>();
-            loopPages(document, pages, books);
+            loopPages(document, 10, books);
 
             return new Books(books);
         } catch (IOException e) {
@@ -33,7 +32,7 @@ class GandalfScrapperJsoup implements BookstoreScrapper {
     }
 
     private void loopPages(Document document, int pages, List<Book> books) throws IOException {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < pages; i++) {
             printInfo(Bookstore.GANDALF, "---- Page #" + (i + 1));
             var booksSection = document.getElementById("list-of-filter-products");
             var booksElements = Objects.requireNonNull(booksSection).getElementsByClass("info-box");
@@ -46,7 +45,7 @@ class GandalfScrapperJsoup implements BookstoreScrapper {
     private Book tryBookScrap(Element book) {
         try {
             return readBookInfo(book);
-        } catch (NoSuchElementException e) {
+        } catch (NumberFormatException e) {
             System.err.printf("Unable to scrap %s element. Skipping.%n", book.text());
             return null;
         }

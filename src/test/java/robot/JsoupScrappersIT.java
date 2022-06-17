@@ -4,6 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -18,11 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * @author Mariusz Bal
- */
-@Test
-public class BonitoScrapperJsoupIT {
+public class JsoupScrappersIT {
 
     private ByteArrayOutputStream output;
 
@@ -37,19 +34,28 @@ public class BonitoScrapperJsoupIT {
         System.setOut(System.out);
     }
 
-    public void shouldScrapFixedPage() throws NoSuchMethodException, IOException, InvocationTargetException, IllegalAccessException {
+    @DataProvider
+    private Object[][] bookstoreProvider() {
+        return new Object[][]{
+                {new BonitoScrapperJsoup(), "bonito.html"},
+                {new GandalfScrapperJsoup(), "gandalf.html"},
+        };
+    }
+
+    @Test(dataProvider = "bookstoreProvider")
+    public void shouldScrapFixedPage(BookstoreScrapper scrapper, String webpage) throws NoSuchMethodException,
+            IOException, InvocationTargetException, IllegalAccessException {
         //g
-        BookstoreScrapper bonito = new BonitoScrapperJsoup();
-        Method method = bonito.getClass().getDeclaredMethod("loopPages",
+        Method method = scrapper.getClass().getDeclaredMethod("loopPages",
                 Document.class, int.class, List.class);
         method.setAccessible(true);
 
-        URL url = Thread.currentThread().getContextClassLoader().getResource("bonito.html");
+        URL url = Thread.currentThread().getContextClassLoader().getResource(webpage);
         File file = new File(Objects.requireNonNull(url).getPath());
         Document document = Jsoup.parse(file, "utf-8");
         List<Book> books = new ArrayList<>();
         //w
-        method.invoke(bonito, document, 1, books);
+        method.invoke(scrapper, document, 1, books);
         //t
         SoftAssert sa = new SoftAssert();
         sa.assertTrue(output.toString().contains("---- Done"), "End of scrapping should be logged");

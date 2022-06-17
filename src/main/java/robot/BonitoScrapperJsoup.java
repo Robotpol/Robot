@@ -3,7 +3,6 @@ package robot;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.openqa.selenium.NoSuchElementException;
 
 import java.io.IOException;
 import java.net.URL;
