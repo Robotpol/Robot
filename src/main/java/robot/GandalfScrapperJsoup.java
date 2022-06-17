@@ -20,7 +20,7 @@ class GandalfScrapperJsoup implements BookstoreScrapper {
     @Override
     public Books call() {
         try {
-            Document document = Jsoup.parse(new URL(url), 10000);
+            Document document = Jsoup.connect(url).timeout(10000).execute().parse();
             int pages = findPageCount(document);
             List<Book> books = new ArrayList<>();
             loopPages(document, pages, books);
@@ -45,7 +45,7 @@ class GandalfScrapperJsoup implements BookstoreScrapper {
 
     @Override
     public Document nextPage(int i) throws IOException {
-        return Jsoup.parse(new URL(url + (i + 1)), 10000);
+        return Jsoup.connect(url + (i + 1)).timeout(10000).execute().parse();
     }
 
     @Override
