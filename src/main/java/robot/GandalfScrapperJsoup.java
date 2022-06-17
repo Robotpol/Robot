@@ -15,7 +15,11 @@ import java.util.Objects;
  * @author Mariusz Bal
  */
 class GandalfScrapperJsoup implements BookstoreScrapper {
-    private final String url = "https://www.gandalf.com.pl/promocje/bcb";
+    private final String url;
+
+    GandalfScrapperJsoup(String url) {
+        this.url = url;
+    }
 
     @Override
     public Books call() {
