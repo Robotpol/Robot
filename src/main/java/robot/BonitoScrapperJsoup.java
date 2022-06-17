@@ -16,7 +16,12 @@ import java.util.Objects;
  */
 class BonitoScrapperJsoup implements BookstoreScrapper {
 
-    private final String url = "https://bonito.pl/kategoria/ksiazki/?results=L3YxL3NlYXJjaC9wcm9kdWN0cy8/Y2F0ZWdvcnk9a3NpYXpraQ==&page=";
+    private final String url;
+
+    BonitoScrapperJsoup(String url) {
+        this.url = url;
+    }
+
 
     @Override
     public Books call() {
