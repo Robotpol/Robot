@@ -3,6 +3,7 @@ package robot;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,9 +25,7 @@ class GandalfScrapperJsoup implements BookstoreScrapper {
     @Override
     public Books call() {
         try {
-            Document document = Jsoup.connect(url)
-                .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0")  
-                .timeout(10000).execute().parse();
+            Document document = Jsoup.parse(new URL(url), 10000);
             int pages = findPageCount(document);
             List<Book> books = new ArrayList<>();
             loopPages(document, pages, books);
@@ -50,10 +49,8 @@ class GandalfScrapperJsoup implements BookstoreScrapper {
     }
 
     @Override
-    public Document nextPage(int i) throws IOException {
-        return Jsoup.connect(url + (i + 1))
-            .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0")
-            .timeout(10000).execute().parse();
+    public Document nextPage(int i) throws IOException{
+        return Jsoup.parse(new URL(url + (i + 1)), 10000);
     }
 
     @Override
@@ -68,7 +65,9 @@ class GandalfScrapperJsoup implements BookstoreScrapper {
 
     @Override
     public int findPageCount(Document document) {
-        return Integer.parseInt(document.getElementsByClass("max-pages").get(0).text());
+        Elements elementsByClass = document.getElementsByClass("max-pages");
+        Element element = elementsByClass.get(0);
+        return Integer.parseInt(element.text());
     }
 
     @Override
