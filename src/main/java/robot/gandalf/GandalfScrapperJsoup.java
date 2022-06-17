@@ -1,9 +1,13 @@
-package robot;
+package robot.gandalf;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import robot.Book;
+import robot.Books;
+import robot.Bookstore;
+import robot.BookstoreScrapper;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,7 +42,7 @@ class GandalfScrapperJsoup implements BookstoreScrapper {
 
     @Override
     public void loopPages(Document document, int pages, List<Book> books) throws IOException {
-        for (int i = 0; i < pages; i++) {
+        for (int i = 0; i < 3; i++) {
             printInfo(Bookstore.GANDALF, "---- Page #" + (i + 1));
             var booksSection = document.getElementById("list-of-filter-products");
             var booksElements = Objects.requireNonNull(booksSection).getElementsByClass("info-box");

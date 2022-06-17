@@ -1,8 +1,12 @@
-package robot;
+package robot.bonito;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import robot.Book;
+import robot.Books;
+import robot.Bookstore;
+import robot.BookstoreScrapper;
 
 import java.io.IOException;
 import java.net.URL;
@@ -39,7 +43,7 @@ class BonitoScrapperJsoup implements BookstoreScrapper {
 
     @Override
     public void loopPages(Document document, int pages, List<Book> books) throws IOException {
-        for (int i = 0; i < pages; i++) {
+        for (int i = 0; i < 3; i++) {
             printInfo(Bookstore.BONITO, "---- Page #" + (i + 1));
             var booksElements = document.getElementsByClass("product_box");
             booksElements.stream().map(this::tryBookScrap).filter(Objects::nonNull).forEach(books::add);

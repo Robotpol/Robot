@@ -25,7 +25,7 @@ final class GandalfBookMapper {
         return books.stream()
                 .map(b -> GandalfBook.builder()
                         .title(b.title())
-                        .author(b.title())
+                        .author(b.author())
                         .oldPrice(b.oldPrice())
                         .price(b.price())
                         .link(b.link())
