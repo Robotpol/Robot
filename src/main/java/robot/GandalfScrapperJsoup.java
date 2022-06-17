@@ -20,7 +20,9 @@ class GandalfScrapperJsoup implements BookstoreScrapper {
     @Override
     public Books call() {
         try {
-            Document document = Jsoup.connect(url).timeout(10000).execute().parse();
+            Document document = Jsoup.connect(url)
+                .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0")  
+                .timeout(10000).execute().parse();
             int pages = findPageCount(document);
             List<Book> books = new ArrayList<>();
             loopPages(document, pages, books);
@@ -45,7 +47,9 @@ class GandalfScrapperJsoup implements BookstoreScrapper {
 
     @Override
     public Document nextPage(int i) throws IOException {
-        return Jsoup.connect(url + (i + 1)).timeout(10000).execute().parse();
+        return Jsoup.connect(url + (i + 1))
+            .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0")
+            .timeout(10000).execute().parse();
     }
 
     @Override
