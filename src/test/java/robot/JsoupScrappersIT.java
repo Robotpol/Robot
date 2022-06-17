@@ -18,7 +18,6 @@ import java.util.Objects;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-@Listeners(MockitoTestNGListener.class)
 public class JsoupScrappersIT {
 
     private ByteArrayOutputStream output;
