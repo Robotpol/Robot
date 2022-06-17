@@ -2,23 +2,23 @@ package robot;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.mockito.testng.MockitoTestNGListener;
+import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
+
+@Listeners(MockitoTestNGListener.class)
 public class JsoupScrappersIT {
 
     private ByteArrayOutputStream output;
@@ -43,19 +43,14 @@ public class JsoupScrappersIT {
     }
 
     @Test(dataProvider = "bookstoreProvider")
-    public void shouldScrapFixedPage(BookstoreScrapper scrapper, String webpage) throws NoSuchMethodException,
-            IOException, InvocationTargetException, IllegalAccessException {
+    public void shouldScrapFixedPage(BookstoreScrapper scrapper, String webpage) throws IOException {
         //g
-        Method method = scrapper.getClass().getDeclaredMethod("loopPages",
-                Document.class, int.class, List.class);
-        method.setAccessible(true);
-
-        URL url = Thread.currentThread().getContextClassLoader().getResource(webpage);
-        File file = new File(Objects.requireNonNull(url).getPath());
-        Document document = Jsoup.parse(file, "utf-8");
+        BookstoreScrapper mock = spy(scrapper);
+        Document document = getDocument(webpage);
         List<Book> books = new ArrayList<>();
         //w
-        method.invoke(scrapper, document, 1, books);
+        when(mock.nextPage(0)).thenReturn(document);
+        mock.loopPages(document, 1, books);
         //t
         SoftAssert sa = new SoftAssert();
         sa.assertTrue(output.toString().contains("---- Done"), "End of scrapping should be logged");
@@ -63,4 +58,9 @@ public class JsoupScrappersIT {
         sa.assertAll();
     }
 
+    private Document getDocument(String webpage) throws IOException {
+        URL url = Thread.currentThread().getContextClassLoader().getResource(webpage);
+        File file = new File(Objects.requireNonNull(url).getPath());
+        return Jsoup.parse(file, "utf-8");
+    }
 }
