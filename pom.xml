@@ -39,6 +39,7 @@
         <webdrivermanager.version>5.2.0</webdrivermanager.version>
         <mockito-testng.version>0.4.23</mockito-testng.version>
         <jsoup.version>1.14.3</jsoup.version>
+        <maven-failsafe-plugin.version>3.0.0-M7</maven-failsafe-plugin.version>
     </properties>
 
     <profiles>
@@ -227,6 +228,11 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven-failsafe-plugin.version}</version>
             </plugin>
         </plugins>
     </build>

@@ -25,7 +25,7 @@ class BonitoScrapperJsoup implements BookstoreScrapper {
             Document document = Jsoup.parse(new URL(url + 1), 10000);
             int pages = findPageCount(document);
             List<Book> books = new ArrayList<>();
-            loopPages(document, pages, books);
+            loopPages(document, 10, books);
 
             return new Books(books);
         } catch (IOException e) {
@@ -34,7 +34,7 @@ class BonitoScrapperJsoup implements BookstoreScrapper {
     }
 
     private void loopPages(Document document, int pages, List<Book> books) throws IOException {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < pages; i++) {
             printInfo(Bookstore.BONITO, "---- Page #" + (i + 1));
             var booksElements = document.getElementsByClass("product_box");
             booksElements.stream().map(this::tryBookScrap).filter(Objects::nonNull).forEach(books::add);
@@ -46,7 +46,7 @@ class BonitoScrapperJsoup implements BookstoreScrapper {
     private Book tryBookScrap(Element book) {
         try {
             return readBookInfo(book);
-        } catch (NoSuchElementException e) {
+        } catch (NumberFormatException e) { //NFE when the book is unavailable - hence no new price
             System.err.printf("Unable to scrap %s element. Skipping.%n", book.text());
             return null;
         }
