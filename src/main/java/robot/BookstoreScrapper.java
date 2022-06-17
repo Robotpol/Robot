@@ -1,17 +1,30 @@
 package robot;
 
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
  * @author Dominik Żebracki
  */
-@FunctionalInterface
 interface BookstoreScrapper extends Callable<Books> {
     Books call();
+
+    void loopPages(Document document, int pages, List<Book> books) throws IOException;
+
+    Document nextPage(int i) throws IOException;
+
+    Book tryBookScrap(Element book);
+
+    int findPageCount(Document document);
+
+    Book readBookInfo(Element book);
 
     default void waitForPageLoad(WebDriver driver) {
         while (true) {

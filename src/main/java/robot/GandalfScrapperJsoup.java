@@ -23,7 +23,7 @@ class GandalfScrapperJsoup implements BookstoreScrapper {
             Document document = Jsoup.parse(new URL(url), 10000);
             int pages = findPageCount(document);
             List<Book> books = new ArrayList<>();
-            loopPages(document, 10, books);
+            loopPages(document, pages, books);
 
             return new Books(books);
         } catch (IOException e) {
@@ -31,18 +31,25 @@ class GandalfScrapperJsoup implements BookstoreScrapper {
         }
     }
 
-    private void loopPages(Document document, int pages, List<Book> books) throws IOException {
+    @Override
+    public void loopPages(Document document, int pages, List<Book> books) throws IOException {
         for (int i = 0; i < pages; i++) {
             printInfo(Bookstore.GANDALF, "---- Page #" + (i + 1));
             var booksSection = document.getElementById("list-of-filter-products");
             var booksElements = Objects.requireNonNull(booksSection).getElementsByClass("info-box");
             booksElements.stream().map(this::tryBookScrap).filter(Objects::nonNull).forEach(books::add);
-            document = Jsoup.parse(new URL(url + (i + 1)), 10000);
+            document = nextPage(i);
         }
         printInfo(Bookstore.GANDALF, "---- Done");
     }
 
-    private Book tryBookScrap(Element book) {
+    @Override
+    public Document nextPage(int i) throws IOException {
+        return Jsoup.parse(new URL(url + (i + 1)), 10000);
+    }
+
+    @Override
+    public Book tryBookScrap(Element book) {
         try {
             return readBookInfo(book);
         } catch (NumberFormatException e) {
@@ -51,11 +58,13 @@ class GandalfScrapperJsoup implements BookstoreScrapper {
         }
     }
 
-    private int findPageCount(Document document) {
+    @Override
+    public int findPageCount(Document document) {
         return Integer.parseInt(document.getElementsByClass("max-pages").get(0).text());
     }
 
-    private Book readBookInfo(Element book) {
+    @Override
+    public Book readBookInfo(Element book) {
         var titleElement = book.getElementsByClass("title").get(0);
         var title = titleElement.text();
         var author = book.getElementsByClass("author").text();

@@ -24,7 +24,7 @@ class BonitoScrapperJsoup implements BookstoreScrapper {
             Document document = Jsoup.parse(new URL(url + 1), 10000);
             int pages = findPageCount(document);
             List<Book> books = new ArrayList<>();
-            loopPages(document, 10, books);
+            loopPages(document, pages, books);
 
             return new Books(books);
         } catch (IOException e) {
@@ -32,17 +32,24 @@ class BonitoScrapperJsoup implements BookstoreScrapper {
         }
     }
 
-    private void loopPages(Document document, int pages, List<Book> books) throws IOException {
+    @Override
+    public void loopPages(Document document, int pages, List<Book> books) throws IOException {
         for (int i = 0; i < pages; i++) {
             printInfo(Bookstore.BONITO, "---- Page #" + (i + 1));
             var booksElements = document.getElementsByClass("product_box");
             booksElements.stream().map(this::tryBookScrap).filter(Objects::nonNull).forEach(books::add);
-            document = Jsoup.parse(new URL(url + (i + 2)), 10000);
+            document = nextPage(i);
         }
         printInfo(Bookstore.BONITO, "---- Done");
     }
 
-    private Book tryBookScrap(Element book) {
+    @Override
+    public Document nextPage(int i) throws IOException {
+        return Jsoup.parse(new URL(url + (i + 2)), 10000);
+    }
+
+    @Override
+    public Book tryBookScrap(Element book) {
         try {
             return readBookInfo(book);
         } catch (NumberFormatException e) { //NFE when the book is unavailable - hence no new price
@@ -51,12 +58,14 @@ class BonitoScrapperJsoup implements BookstoreScrapper {
         }
     }
 
-    private int findPageCount(Document document) {
+    @Override
+    public int findPageCount(Document document) {
         return Integer.parseInt(document.select("div.H4L.color-light.text-nowrap")
                 .text().split(" ")[2]);
     }
 
-    private Book readBookInfo(Element book) {
+    @Override
+    public Book readBookInfo(Element book) {
         var title = book.getElementsByClass("mb-2").get(0).text();
         var authorPublisherSection = book.selectXpath(".//div[contains(@class, 'T2L') " +
                 "and contains(@class, 'color-dark')]");
