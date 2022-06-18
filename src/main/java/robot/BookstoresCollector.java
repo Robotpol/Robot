@@ -22,7 +22,10 @@ class BookstoresCollector {
                             .map(CompletableFuture::join)
                             .toList())
                     .get(DEFAULT_TIMEOUT_IN_MINUTES, TimeUnit.MINUTES);
-        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new CollectingException("Error occurred during collecting books", e);
+        } catch (ExecutionException | TimeoutException e) {
             System.err.println("Error occurred during collecting books");
             throw new CollectingException("Error occurred during collecting books", e);
         } finally {

@@ -1,6 +1,6 @@
 package robot;
 
 public enum Bookstore {
-    GANDALF(),
-    BONITO()
+    GANDALF,
+    BONITO
 }
