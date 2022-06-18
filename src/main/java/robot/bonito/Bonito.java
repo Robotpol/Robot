@@ -23,13 +23,24 @@ public class Bonito implements BookProvider {
 
     @Override
     public boolean updateBooks() {
-        return bonitoService.updateBooks();
+        try {
+            bonitoService.updateBooks();
+            return true;
+        } catch (ScrappingException e) {
+            //TODO some more meaningful information should be returned
+            // about database update outcome after dividing into microservices
+            return false;
+        }
     }
 
     @Override
     public Books updateAndProvideBooks() {
-       bonitoService.updateBooks();
-       return bonitoService.provideBooks();
+        try {
+            bonitoService.updateBooks();
+        } catch (ScrappingException e) {
+            //TODO some information whether database was updated should be returned alongside books.
+        }
+        return provideBooks();
     }
 
     @Override
