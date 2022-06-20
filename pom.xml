@@ -35,8 +35,6 @@
         <testng.version>7.5</testng.version>
         <jcip-annotations.version>1.0</jcip-annotations.version>
         <spotbugs.version>4.7.0</spotbugs.version>
-        <selenium.version>4.2.2</selenium.version>
-        <webdrivermanager.version>5.2.0</webdrivermanager.version>
         <mockito-testng.version>0.4.23</mockito-testng.version>
         <jsoup.version>1.14.3</jsoup.version>
         <maven-failsafe-plugin.version>3.0.0-M7</maven-failsafe-plugin.version>
@@ -109,16 +107,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>webdrivermanager</artifactId>
-            <version>${webdrivermanager.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-testng</artifactId>
             <version>${mockito-testng.version}</version>
@@ -158,17 +146,6 @@
                             <tag>latest</tag>
                         </tags>
                     </to>
-                    <container>
-                      <entrypoint>/docker-entrypoint.sh</entrypoint>
-                    </container>
-                    <extraDirectories>
-                      <permissions>
-                        <permission>
-                          <file>/docker-entrypoint.sh</file>
-                          <mode>755</mode>
-                        </permission>
-                      </permissions>
-                    </extraDirectories>
                 </configuration>
             </plugin>
             <plugin>
@@ -184,12 +161,6 @@
                         <configuration>
                             <rules>
                                 <banDuplicatePomDependencyVersions/>
-                                <requireMavenVersion>
-                                    <version>${version.maven}</version>
-                                </requireMavenVersion>
-                                <requireJavaVersion>
-                                    <version>${project.version.java}</version>
-                                </requireJavaVersion>
                             </rules>
                         </configuration>
                     </execution>
@@ -222,7 +193,7 @@
                     </execution>
                     <execution>
                         <id>report</id>
-                        <phase>test</phase>
+                        <phase>verify</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
