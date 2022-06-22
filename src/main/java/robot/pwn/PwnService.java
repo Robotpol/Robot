@@ -15,7 +15,7 @@ import java.util.List;
 class PwnService {
 
     private static final String DEFAULT_LINK =
-            "https://ksiegarnia.pwn.pl/promocje";
+            "https://ksiegarnia.pwn.pl/promocje?limit=96";
 
     private final PwnBookRepository pwnBookRepository;
     private final BookstoreScrapper scrapper;
