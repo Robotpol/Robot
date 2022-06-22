@@ -33,7 +33,7 @@ class BonitoScrapperJsoup implements BookstoreScrapper {
             Document document = Jsoup.parse(new URL(url + 1), 10000);
             int pages = findPageCount(document);
             List<Book> books = new ArrayList<>();
-            loopPages(document, pages, books);
+            loopPages(document, 10, books);
 
             return new Books(books);
         } catch (IOException e) {
