@@ -43,7 +43,7 @@ class BonitoScrapperJsoup implements BookstoreScrapper {
 
     @Override
     public void loopPages(Document document, int pages, List<Book> books) throws IOException {
-        for (int i = 0; i < pages; i++) {
+        for (int i = 0; i < 2; i++) {
             printInfo(Bookstore.BONITO, "---- Page #" + (i + 1));
             var booksElements = document.getElementsByClass("product_box");
             booksElements.stream().map(this::tryBookScrap).filter(Objects::nonNull).forEach(books::add);
