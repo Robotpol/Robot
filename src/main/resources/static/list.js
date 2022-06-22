@@ -2,7 +2,8 @@ var BASE_URL = "http://67.207.76.109:8080/api/v1/";
 
 var BOOKSTORE = {
     BONITO: "bonito",
-    GANDALF: "gandalf"
+    GANDALF: "gandalf",
+    PWN: "pwn"
 };
 
 function requestBooks(library) {
@@ -51,11 +52,18 @@ function bookstoreClicked(bookstore) {
 	if (bookstore == BOOKSTORE.BONITO) {
 		document.getElementById('bonito').className = 'btn btn-primary';
 		document.getElementById('gandalf').className = 'btn btn-outline-primary';
+		document.getElementById('pwn').className = 'btn btn-outline-primary';
 		requestBooks(BOOKSTORE.BONITO);
 	} else if (bookstore == BOOKSTORE.GANDALF) {
 		document.getElementById('gandalf').className = 'btn btn-primary';
 		document.getElementById('bonito').className = 'btn btn-outline-primary';
+		document.getElementById('pwn').className = 'btn btn-outline-primary';
 		requestBooks(BOOKSTORE.GANDALF);
+	} else if (bookstore == BOOKSTORE.PWN) {
+	    document.getElementById('pwn').className = 'btn btn-primary';
+        document.getElementById('bonito').className = 'btn btn-outline-primary';
+        document.getElementById('gandalf').className = 'btn btn-outline-primary';
+        requestBooks(BOOKSTORE.PWN);
 	}
 }
 
