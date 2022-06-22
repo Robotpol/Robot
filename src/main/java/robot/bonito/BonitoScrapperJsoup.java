@@ -1,8 +1,12 @@
-package robot;
+package robot.bonito;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import robot.Book;
+import robot.Books;
+import robot.Bookstore;
+import robot.BookstoreScrapper;
 
 import java.io.IOException;
 import java.net.URL;

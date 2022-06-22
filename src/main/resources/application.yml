@@ -1,0 +1,4 @@
+spring:
+  data:
+    mongodb:
+       uri: mongodb://user:user@167.99.134.145:27017/scrappers

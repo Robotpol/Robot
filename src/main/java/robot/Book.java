@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 /**
  * @author Dominik Żebracki
  */
-record Book(
+public record Book(
         String title,
         String author,
         BigDecimal oldPrice,
