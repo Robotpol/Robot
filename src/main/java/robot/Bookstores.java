@@ -1,5 +1,6 @@
 package robot;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,6 +16,9 @@ class Bookstores {
     private final Map<String, BookProvider> bookProviders;
     // TODO replace with RDBMS
     private final Map<String, Books> bookstores;
+
+    @Autowired
+    private ScrappedBookService scrappedBookService;
 
     Bookstores(Set<BookProvider> bookProvidersRegisteredInContext) {
         bookProviders = bookProvidersRegisteredInContext
@@ -45,11 +49,16 @@ class Bookstores {
     }
 
     Books getBooks(String bookstoreName) {
-        return bookstores.get(bookstoreName.toUpperCase(Locale.ROOT));
+        return scrappedBookService.filter(bookstoreName, "", "", "", "");
     }
 
-    private void processCollectingResults(List<CollectingResult> results) {
-        results.forEach(r -> bookstores.computeIfPresent(r.providerName(), (k, v) -> r.books()));
+    Books getBooks(String bookstoreName, Map<String, String> filters) {
+        return scrappedBookService.filter(bookstoreName, filters.get("title"),
+                filters.get("author"), filters.get("min"), filters.get("max"));
+    }
+
+    private void processCollectingResults(List<BookstoresCollector.CollectingResult> results) {
+        results.forEach(r -> scrappedBookService.save(r.providerName(), r.books()));
     }
 
     @Override

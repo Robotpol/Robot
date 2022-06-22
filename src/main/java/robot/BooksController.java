@@ -20,8 +20,7 @@ public class BooksController {
             @PathVariable String bookstore,
             @RequestParam Map<String, String> filters
             ) {
-        filters.forEach((f, l) -> System.out.println(f + ":" + l));
-        Books books = bookstores.getBooks(bookstore);
+        Books books = bookstores.getBooks(bookstore, filters);
         return ResponseEntity.ok(books);
     }
 
