@@ -30,7 +30,7 @@ class Bookstores {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    void update(String ... bookstoreName) {
+    void update(String... bookstoreName) {
         try {
             processCollectingResults(BookstoresCollector.collectFrom(Arrays.stream(bookstoreName)
                     .map(bookProviders::get)
@@ -44,7 +44,7 @@ class Bookstores {
         try {
             processCollectingResults(BookstoresCollector.collectFrom(bookProviders.values().stream().toList()));
         } catch (CollectingException e) {
-           //TODO add a proper logging message. User also should be probably notified so something should be returned.
+            //TODO add a proper logging message. User also should be probably notified so something should be returned.
         }
     }
 
@@ -57,7 +57,7 @@ class Bookstores {
                 filters.get("author"), filters.get("min"), filters.get("max"));
     }
 
-    private void processCollectingResults(List<BookstoresCollector.CollectingResult> results) {
+    private void processCollectingResults(List<CollectingResult> results) {
         results.forEach(r -> scrappedBookService.save(r.providerName(), r.books()));
     }
 

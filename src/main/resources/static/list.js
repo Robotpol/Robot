@@ -26,6 +26,7 @@ function requestBooks(library) {
 
 function fillTable(books) {
 	var table = document.getElementById('books');
+	table.innerHTML = "";
 	for (var i = 0; i < books.length; i++) {
 		let tr = document.createElement("tr");
 		tr.appendChild(createTableCell(books[i].title, 'title'));
