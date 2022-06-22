@@ -2,5 +2,6 @@ package robot;
 
 public enum Bookstore {
     GANDALF,
-    BONITO
+    BONITO,
+    PWN
 }

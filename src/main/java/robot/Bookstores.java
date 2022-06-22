@@ -48,7 +48,7 @@ class Bookstores {
         return bookstores.get(bookstoreName.toUpperCase(Locale.ROOT));
     }
 
-    private void processCollectingResults(List<BookstoresCollector.CollectingResult> results) {
+    private void processCollectingResults(List<CollectingResult> results) {
         results.forEach(r -> bookstores.computeIfPresent(r.providerName(), (k, v) -> r.books()));
     }
 

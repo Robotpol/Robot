@@ -1,7 +1,5 @@
 package robot;
 
-import robot.gandalf.Gandalf;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,25 +14,23 @@ class BookstoresCollector {
     //TODO add a logger to log exceptions
 
     static List<CollectingResult> collectFrom(List<BookProvider> bookProviders) throws CollectingException {
-        bookProviders = bookProviders.stream().filter(p -> p.getClass() == Gandalf.class).toList();
-        return List.of(new CollectingResult("gandalf", LocalDateTime.now(), bookProviders.get(0).updateAndProvideBooks()));
-//        var executor = Executors.newFixedThreadPool(bookProviders.size());
-//        var tasks = createTasks(bookProviders, executor);
-//        try {
-//            return CompletableFuture.allOf(tasks.toArray(new CompletableFuture[0]))
-//                    .thenApply(f -> tasks.stream()
-//                            .map(CompletableFuture::join)
-//                            .toList())
-//                    .get(DEFAULT_TIMEOUT_IN_MINUTES, TimeUnit.MINUTES);
-//        } catch (InterruptedException e) {
-//            Thread.currentThread().interrupt();
-//            throw new CollectingException("Error occurred during collecting books", e);
-//        } catch (ExecutionException | TimeoutException e) {
-//            System.err.println("Error occurred during collecting books");
-//            throw new CollectingException("Error occurred during collecting books", e);
-//        } finally {
-//            executor.shutdown();
-//        }
+        var executor = Executors.newFixedThreadPool(bookProviders.size());
+        var tasks = createTasks(bookProviders, executor);
+        try {
+            return CompletableFuture.allOf(tasks.toArray(new CompletableFuture[0]))
+                    .thenApply(f -> tasks.stream()
+                            .map(CompletableFuture::join)
+                            .toList())
+                    .get(DEFAULT_TIMEOUT_IN_MINUTES, TimeUnit.MINUTES);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new CollectingException("Error occurred during collecting books", e);
+        } catch (ExecutionException | TimeoutException e) {
+            System.err.println("Error occurred during collecting books");
+            throw new CollectingException("Error occurred during collecting books", e);
+        } finally {
+            executor.shutdown();
+        }
     }
 
     private static List<CompletableFuture<CollectingResult>> createTasks(List<BookProvider> bookProviders,
@@ -51,5 +47,4 @@ class BookstoresCollector {
         return new CollectingResult("", LocalDateTime.now(), new Books(new ArrayList<>()));
     }
 
-    record CollectingResult(String providerName, LocalDateTime collectedAt, Books books){}
 }

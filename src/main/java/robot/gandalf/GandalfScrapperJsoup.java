@@ -43,7 +43,7 @@ class GandalfScrapperJsoup implements BookstoreScrapper {
 
     @Override
     public void loopPages(Document document, int pages, List<Book> books) throws IOException {
-        for (int i = 0; i < pages; i++) {
+        for (int i = 0; i < 2; i++) {
             printInfo(Bookstore.GANDALF, "---- Page #" + (i + 1));
             var booksSection = document.getElementById("list-of-filter-products");
             var booksElements = Objects.requireNonNull(booksSection).getElementsByClass("info-box");
