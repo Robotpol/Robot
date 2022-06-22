@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.6</version>
+        <version>2.7.0</version>
         <relativePath/>
     </parent>
     <groupId>org.robotpol</groupId>
@@ -21,26 +21,27 @@
         <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
         <maven.compiler.release>17</maven.compiler.release>
 
-        <spring-boot-maven-plugin.version>2.6.7</spring-boot-maven-plugin.version>
+        <spring-boot-maven-plugin.version>2.7.0</spring-boot-maven-plugin.version>
         <jib-maven-plugin.version>3.2.1</jib-maven-plugin.version>
         <image>robotpol6/${project.artifactId}:${project.version}</image>
 
         <version.plugin.maven.dependency>3.3.0</version.plugin.maven.dependency>
         <version.plugin.maven.spotbugs>4.7.0.0</version.plugin.maven.spotbugs>
-        <version.plugin.maven.jacoco>0.8.7</version.plugin.maven.jacoco>
-        <version.plugin.maven.enforcer>3.0.0</version.plugin.maven.enforcer>
+        <version.plugin.maven.jacoco>0.8.8</version.plugin.maven.jacoco>
+        <version.plugin.maven.enforcer>3.1.0</version.plugin.maven.enforcer>
         <version.plugin.maven.compiler>3.10.1</version.plugin.maven.compiler>
 
         <version.maven>3.8.5</version.maven>
-        <testng.version>7.5</testng.version>
+        <testng.version>7.6.0</testng.version>
         <jcip-annotations.version>1.0</jcip-annotations.version>
         <spotbugs.version>4.7.0</spotbugs.version>
         <selenium.version>4.2.2</selenium.version>
         <webdrivermanager.version>5.2.0</webdrivermanager.version>
-        <mockito-testng.version>0.4.23</mockito-testng.version>
+        <mockito-testng.version>0.4.26</mockito-testng.version>
         <lombok.version>1.18.24</lombok.version>
-        <jsoup.version>1.14.3</jsoup.version>
+        <jsoup.version>1.15.1</jsoup.version>
         <maven-failsafe-plugin.version>3.0.0-M7</maven-failsafe-plugin.version>
+        <h2.version>2.1.214</h2.version>
     </properties>
 
     <profiles>
@@ -87,6 +88,16 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+            <version>${h2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

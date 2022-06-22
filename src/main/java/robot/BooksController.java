@@ -1,10 +1,9 @@
 package robot;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/books")
@@ -18,9 +17,10 @@ public class BooksController {
 
     @GetMapping("{bookstore}")
     ResponseEntity<Books> getBooks(
-            @PathVariable String bookstore
-    ) {
-        Books books = bookstores.getBooks(bookstore);
+            @PathVariable String bookstore,
+            @RequestParam Map<String, String> filters
+            ) {
+        Books books = bookstores.getBooks(bookstore, filters);
         return ResponseEntity.ok(books);
     }
 

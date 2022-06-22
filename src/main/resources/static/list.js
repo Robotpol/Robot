@@ -6,6 +6,8 @@ var BOOKSTORE = {
     PWN: "pwn"
 };
 
+var activeLibrary;
+
 function requestBooks(library) {
 	var req = new XMLHttpRequest();
 	req.open('GET', BASE_URL +'books/' + library, true);
@@ -19,10 +21,12 @@ function requestBooks(library) {
 	};
 	req.send(null);
 	document.getElementById('books').innerHTML = "";
+	activeLibrary = library;
 }
 
 function fillTable(books) {
 	var table = document.getElementById('books');
+	table.innerHTML = "";
 	for (var i = 0; i < books.length; i++) {
 		let tr = document.createElement("tr");
 		tr.appendChild(createTableCell(books[i].title, 'title'));
@@ -68,3 +72,50 @@ function bookstoreClicked(bookstore) {
 }
 
 bookstoreClicked(BOOKSTORE.GANDALF);
+
+// filtering
+ function checkFloat(number) {
+    return !isNaN(parseFloat(number));
+ }
+
+ function validatePriceFilters(min, max) {
+    let valid = true;
+    if (min != "")
+        valid = checkFloat(min);
+    if (max != "")
+        valid = checkFloat(max);
+    return valid;
+ }
+
+ function filter() {
+    let authorFilter = document.getElementById("filter-author").value;
+    let titleFilter = document.getElementById("filter-title").value;
+    let minFilter = document.getElementById("filter-min-price").value;
+    let maxFilter = document.getElementById("filter-max-price").value;
+
+    if (!validatePriceFilters(minFilter, maxFilter))
+        alert("Sprawdź filtry");
+    else if (authorFilter != "" || titleFilter != "" || minFilter != "" || maxFilter != "")
+        sendFilterRequest(authorFilter, titleFilter, parseFloat(minFilter), parseFloat(maxFilter));
+ }
+
+ function sendFilterRequest(author, title, min, max) {
+    let filterParams = new URLSearchParams({
+      "author": author,
+      "title": title,
+      "min": min,
+      "max": max
+    });
+
+    var req = new XMLHttpRequest();
+    	req.open('GET', BASE_URL + 'books/' + activeLibrary + "?" + filterParams, true);
+    	req.onreadystatechange = function (aEvt) {
+    	  if (req.readyState == 4) {
+    	     if(req.status == 200)
+    	      fillTable(JSON.parse(req.responseText).books);
+    	     else
+    	      console.error("An error occurred while fetching the books");
+    	  }
+    	};
+    	req.send(null);
+ }

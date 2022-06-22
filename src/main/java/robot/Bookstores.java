@@ -1,5 +1,6 @@
 package robot;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -16,6 +17,9 @@ class Bookstores {
     // TODO replace with RDBMS
     private final Map<String, Books> bookstores;
 
+    @Autowired
+    private ScrappedBookService scrappedBookService;
+
     Bookstores(Set<BookProvider> bookProvidersRegisteredInContext) {
         bookProviders = bookProvidersRegisteredInContext
                 .stream()
@@ -26,7 +30,7 @@ class Bookstores {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    void update(String ... bookstoreName) {
+    void update(String... bookstoreName) {
         try {
             processCollectingResults(BookstoresCollector.collectFrom(Arrays.stream(bookstoreName)
                     .map(bookProviders::get)
@@ -40,16 +44,21 @@ class Bookstores {
         try {
             processCollectingResults(BookstoresCollector.collectFrom(bookProviders.values().stream().toList()));
         } catch (CollectingException e) {
-           //TODO add a proper logging message. User also should be probably notified so something should be returned.
+            //TODO add a proper logging message. User also should be probably notified so something should be returned.
         }
     }
 
     Books getBooks(String bookstoreName) {
-        return bookstores.get(bookstoreName.toUpperCase(Locale.ROOT));
+        return scrappedBookService.filter(bookstoreName, "", "", "", "");
+    }
+
+    Books getBooks(String bookstoreName, Map<String, String> filters) {
+        return scrappedBookService.filter(bookstoreName, filters.get("title"),
+                filters.get("author"), filters.get("min"), filters.get("max"));
     }
 
     private void processCollectingResults(List<CollectingResult> results) {
-        results.forEach(r -> bookstores.computeIfPresent(r.providerName(), (k, v) -> r.books()));
+        results.forEach(r -> scrappedBookService.save(r.providerName(), r.books()));
     }
 
     @Override
