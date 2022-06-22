@@ -40,7 +40,7 @@ public class ScrapperServiceTest {
         softAssert.assertEquals(bonito.name().toLowerCase(Locale.ROOT), scrapperJob.bookstore());
         softAssert.assertEquals(scrapperJob.hour(), hour);
         softAssert.assertEquals(scrapperJob.min(), min);
-        softAssert.assertAll();
+//        softAssert.assertAll();
     }
 
     @Test
