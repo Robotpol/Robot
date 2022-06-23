@@ -2,6 +2,7 @@ package robot;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -33,8 +34,8 @@ class BookstoresCollector {
         }
     }
 
-    private static List<CompletableFuture<CollectingResult>> createTasks(List<BookProvider> bookProviders,
-                                                                         ExecutorService executor) {
+    private static List<CompletableFuture<CollectingResult>> createTasks(Collection<BookProvider> bookProviders,
+                                                                         Executor executor) {
         return bookProviders.stream()
                 .map(s -> CompletableFuture.supplyAsync(
                         () -> new CollectingResult(s.toString(), LocalDateTime.now(), s.updateAndProvideBooks()), executor)

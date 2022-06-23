@@ -6,6 +6,7 @@ import org.mockito.testng.MockitoTestNGListener;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import robot.Book;
+import robot.BookProvider;
 import robot.Books;
 
 import java.math.BigDecimal;
@@ -31,7 +32,7 @@ public class BonitoTest {
        Mockito.when(bonitoBookRepository.findAll())
                .thenReturn(List.of(new BonitoBook("id", "title", "author", BigDecimal.ONE, BigDecimal.TEN, "link", LocalDateTime.now())));
 
-       var bonito = new Bonito(new BonitoService(bonitoBookRepository, bonitoScrapper));
+       BookProvider bonito = new Bonito(new BonitoService(bonitoBookRepository, bonitoScrapper));
 
        //when
        //then

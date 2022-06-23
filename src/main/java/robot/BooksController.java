@@ -7,7 +7,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/books")
-public class BooksController {
+class BooksController {
 
     private final Bookstores bookstores;
 

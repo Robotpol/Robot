@@ -3,6 +3,7 @@ package robot.gandalf;
 import robot.Book;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  */
 final class GandalfBookMapper {
 
-    static List<Book> toBook(List<GandalfBook> books) {
+    static List<Book> toBook(Collection<GandalfBook> books) {
         return books.stream()
                 .map(b -> new Book(b.getTitle(),
                         b.getAuthor(),
@@ -20,7 +21,7 @@ final class GandalfBookMapper {
                 .toList();
     }
 
-    static List<GandalfBook> toGandalfBook(List<Book> books) {
+    static List<GandalfBook> toGandalfBook(Collection<Book> books) {
         var currentTime = LocalDateTime.now();
         return books.stream()
                 .map(b -> GandalfBook.builder()

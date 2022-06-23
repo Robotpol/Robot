@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/scrappers")
-public class ScrapperController {
+class ScrapperController {
     private final ScrapperService scrapperService;
 
     public ScrapperController(ScrapperService scrapperService) {
