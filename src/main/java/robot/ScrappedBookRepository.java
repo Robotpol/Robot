@@ -12,10 +12,6 @@ import java.math.BigDecimal;
 @Repository
 interface ScrappedBookRepository extends CrudRepository<ScrappedBook, Long> {
 
-//    Iterable<ScrappedBook> findByBookstoreIgnoreCaseAndTitleIgnoreCaseContainingAndAuthorIgnoreCaseContainingAndPriceLessThanEqualAndPriceGreaterThanEqual(
-//            String bookstore, String title, String author, BigDecimal max, BigDecimal min
-//    );
-
     @Query(value = "SELECT * FROM SCRAPPED_BOOK WHERE upper(bookstore)=upper(:bookstore) " +
             "AND upper(title) LIKE upper(:title) " +
             "AND upper(author) LIKE upper(:author) " +

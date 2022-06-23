@@ -8,7 +8,7 @@ import java.util.Locale;
 import java.util.Map;
 
 @Service
-public class BooksService {
+class BooksService {
 
     private final Map<Bookstore, Books> bookstores;
 

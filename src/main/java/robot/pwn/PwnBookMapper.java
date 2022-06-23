@@ -3,6 +3,7 @@ package robot.pwn;
 import robot.Book;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  */
 final class PwnBookMapper {
 
-    static List<PwnBook> toPwnBook(List<Book> books) {
+    static List<PwnBook> toPwnBook(Collection<Book> books) {
         var currentTime = LocalDateTime.now();
         return books.stream()
                 .map(b -> PwnBook.builder()
@@ -24,7 +25,7 @@ final class PwnBookMapper {
                 .toList();
     }
 
-    static List<Book> toBook(List<PwnBook> books) {
+    static List<Book> toBook(Collection<PwnBook> books) {
         return books.stream()
                 .map(b -> new Book(b.getTitle(),
                         b.getAuthor(),

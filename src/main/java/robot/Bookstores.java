@@ -20,7 +20,7 @@ class Bookstores {
     @Autowired
     private ScrappedBookService scrappedBookService;
 
-    Bookstores(Set<BookProvider> bookProvidersRegisteredInContext) {
+    Bookstores(Collection<BookProvider> bookProvidersRegisteredInContext) {
         bookProviders = bookProvidersRegisteredInContext
                 .stream()
                 .collect(Collectors.toMap(BookProvider::toString, Function.identity()));
@@ -57,7 +57,7 @@ class Bookstores {
                 filters.get("author"), filters.get("min"), filters.get("max"));
     }
 
-    private void processCollectingResults(List<CollectingResult> results) {
+    private void processCollectingResults(Iterable<CollectingResult> results) {
         results.forEach(r -> scrappedBookService.save(r.providerName(), r.books()));
     }
 

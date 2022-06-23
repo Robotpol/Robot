@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import robot.Book;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
 @Component
 final class BonitoBookMapper {
 
-    static List<Book> toBook(List<BonitoBook> books) {
+    static List<Book> toBook(Collection<BonitoBook> books) {
         return books.stream()
                 .map(b -> new Book(b.getTitle(),
                         b.getAuthor(),
@@ -22,7 +23,7 @@ final class BonitoBookMapper {
                 .toList();
     }
 
-    static List<BonitoBook> toBonitoBook(List<Book> books) {
+    static List<BonitoBook> toBonitoBook(Collection<Book> books) {
         var currentTime = LocalDateTime.now();
         return books.stream()
                 .map(b -> BonitoBook.builder()

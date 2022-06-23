@@ -6,6 +6,7 @@ import org.mockito.testng.MockitoTestNGListener;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import robot.Book;
+import robot.BookProvider;
 import robot.Books;
 
 import java.math.BigDecimal;
@@ -31,7 +32,7 @@ public class GandalfTest {
         Mockito.when(gandalfBookRepository.findAll())
                 .thenReturn(List.of(new GandalfBook("id", "title", "author", BigDecimal.ONE, BigDecimal.TEN, "link", LocalDateTime.now())));
 
-        var gandalf = new Gandalf(new GandalfService(gandalfBookRepository, gandalfScrapper));
+        BookProvider gandalf = new Gandalf(new GandalfService(gandalfBookRepository, gandalfScrapper));
 
         //when
         //then

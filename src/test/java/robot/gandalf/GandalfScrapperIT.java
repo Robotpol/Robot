@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import robot.Books;
+import robot.BookstoreScrapper;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -45,7 +46,7 @@ public class GandalfScrapperIT {
     @Test
     public void shouldScrapFixedPage() {
         //g
-        var bonitoScrapper = new GandalfScrapperJsoup("http://localhost:10124/");
+        BookstoreScrapper bonitoScrapper = new GandalfScrapperJsoup("http://localhost:10124/");
         //w
         Books call = bonitoScrapper.call();
         //t
