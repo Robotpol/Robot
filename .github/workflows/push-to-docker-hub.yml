@@ -29,5 +29,5 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            cd cd
+            cd robot
             ./udirdc.sh robot robotpol6/robot:latest .
