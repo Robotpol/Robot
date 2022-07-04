@@ -1,4 +1,4 @@
-var BASE_URL = "http://139.59.206.242:8081/api/v1/";
+var BASE_URL = "http://139.59.206.242:8090/api/v1/";
 
 var BOOKSTORE = {
     BONITO: "bonito",
