@@ -1,9 +1,11 @@
 package robot;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -17,13 +19,13 @@ class Bookstores {
     // TODO replace with RDBMS
     private final Map<String, Books> bookstores;
 
-    @Autowired
-    private ScrappedBookService scrappedBookService;
+    private final ScrappedBookService scrappedBookService;
 
-    Bookstores(Collection<BookProvider> bookProvidersRegisteredInContext) {
+    Bookstores(Collection<BookProvider> bookProvidersRegisteredInContext, ScrappedBookService scrappedBookService) {
         bookProviders = bookProvidersRegisteredInContext
                 .stream()
                 .collect(Collectors.toMap(BookProvider::toString, Function.identity()));
+        this.scrappedBookService = scrappedBookService;
         bookstores = bookProviders.keySet()
                 .stream()
                 .map(k -> Map.entry(k, new Books(new ArrayList<>())))
@@ -46,10 +48,6 @@ class Bookstores {
         } catch (CollectingException e) {
             //TODO add a proper logging message. User also should be probably notified so something should be returned.
         }
-    }
-
-    Books getBooks(String bookstoreName) {
-        return scrappedBookService.filter(bookstoreName, "", "", "", "");
     }
 
     Books getBooks(String bookstoreName, Map<String, String> filters) {

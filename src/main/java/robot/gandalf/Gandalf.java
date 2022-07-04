@@ -22,18 +22,6 @@ public class Gandalf implements BookProvider {
     }
 
     @Override
-    public boolean updateBooks() {
-        try {
-            gandalfService.updateBooks();
-            return true;
-        } catch (ScrappingException e) {
-            //TODO some more meaningful information should be returned
-            // about database update outcome after dividing into microservices
-            return false;
-        }
-    }
-
-    @Override
     public Books updateAndProvideBooks() {
         try {
             gandalfService.updateBooks();

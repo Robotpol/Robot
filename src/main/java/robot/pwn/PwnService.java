@@ -1,6 +1,6 @@
 package robot.pwn;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import robot.Book;
 import robot.Books;
@@ -14,19 +14,10 @@ import java.util.List;
 @Service
 class PwnService {
 
-    private static final String DEFAULT_LINK =
-            "https://ksiegarnia.pwn.pl/promocje?limit=96";
-
     private final PwnBookRepository pwnBookRepository;
     private final BookstoreScrapper scrapper;
 
-    @Autowired
-    PwnService(PwnBookRepository bookRepository) {
-        this.pwnBookRepository = bookRepository;
-        this.scrapper = new PwnScrapperJsoup(DEFAULT_LINK);
-    }
-
-    PwnService(PwnBookRepository bookRepository, BookstoreScrapper scrapper) {
+    PwnService(PwnBookRepository bookRepository, @Qualifier("pwn-scrapper") BookstoreScrapper scrapper) {
         this.pwnBookRepository = bookRepository;
         this.scrapper = scrapper;
     }

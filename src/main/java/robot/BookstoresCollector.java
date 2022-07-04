@@ -9,9 +9,9 @@ import java.util.concurrent.*;
 /**
  * @author Dominik Żebracki
  */
-class BookstoresCollector {
+interface BookstoresCollector {
 
-    private static final int DEFAULT_TIMEOUT_IN_MINUTES = 8;
+    int DEFAULT_TIMEOUT_IN_MINUTES = 8;
     //TODO add a logger to log exceptions
 
     static List<CollectingResult> collectFrom(List<BookProvider> bookProviders) throws CollectingException {

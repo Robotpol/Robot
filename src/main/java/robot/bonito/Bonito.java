@@ -22,18 +22,6 @@ public class Bonito implements BookProvider {
     }
 
     @Override
-    public boolean updateBooks() {
-        try {
-            bonitoService.updateBooks();
-            return true;
-        } catch (ScrappingException e) {
-            //TODO some more meaningful information should be returned
-            // about database update outcome after dividing into microservices
-            return false;
-        }
-    }
-
-    @Override
     public Books updateAndProvideBooks() {
         try {
             bonitoService.updateBooks();

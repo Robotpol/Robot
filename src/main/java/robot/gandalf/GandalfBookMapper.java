@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Dominik Żebracki
  */
-final class GandalfBookMapper {
+interface GandalfBookMapper {
 
     static List<Book> toBook(Collection<GandalfBook> books) {
         return books.stream()
@@ -34,6 +34,4 @@ final class GandalfBookMapper {
                         .build())
                 .toList();
     }
-
-    private GandalfBookMapper(){}
 }
