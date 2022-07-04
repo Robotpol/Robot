@@ -1,6 +1,6 @@
 package robot.gandalf;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import robot.Book;
 import robot.Books;
@@ -14,18 +14,10 @@ import java.util.List;
 @Service
 class GandalfService {
 
-    private static final String DEFAULT_LINK = "https://www.gandalf.com.pl/promocje/bcb";
-
     private final GandalfBookRepository gandalfBookRepository;
     private final BookstoreScrapper scrapper;
 
-    @Autowired
-    GandalfService(GandalfBookRepository gandalfBookRepository) {
-        this.gandalfBookRepository = gandalfBookRepository;
-        scrapper = new GandalfScrapperJsoup(DEFAULT_LINK);
-    }
-
-    GandalfService(GandalfBookRepository gandalfBookRepository, BookstoreScrapper bookstoreScrapper) {
+    GandalfService(GandalfBookRepository gandalfBookRepository, @Qualifier("gandalf-scrapper") BookstoreScrapper bookstoreScrapper) {
         this.gandalfBookRepository = gandalfBookRepository;
         this.scrapper = bookstoreScrapper;
     }

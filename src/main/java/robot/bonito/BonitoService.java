@@ -1,6 +1,6 @@
 package robot.bonito;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import robot.Book;
 import robot.Books;
@@ -14,19 +14,10 @@ import java.util.List;
 @Service
 class BonitoService {
 
-    private static final String DEFAULT_LINK =
-            "https://bonito.pl/kategoria/ksiazki/?results=L3YxL3NlYXJjaC9wcm9kdWN0cy8/Y2F0ZWdvcnk9a3NpYXpraQ==&page=";
-
     private final BonitoBookRepository bonitoBookRepository;
     private final BookstoreScrapper scrapper;
 
-    @Autowired
-    BonitoService(BonitoBookRepository bookRepository) {
-        this.bonitoBookRepository = bookRepository;
-        this.scrapper = new BonitoScrapperJsoup(DEFAULT_LINK);
-    }
-
-    BonitoService(BonitoBookRepository bookRepository, BookstoreScrapper scrapper) {
+    BonitoService(BonitoBookRepository bookRepository, @Qualifier("bonito-scrapper") BookstoreScrapper scrapper) {
         this.bonitoBookRepository = bookRepository;
         this.scrapper = scrapper;
     }

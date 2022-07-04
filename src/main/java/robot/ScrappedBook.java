@@ -1,8 +1,6 @@
 package robot;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +12,9 @@ import java.math.BigDecimal;
  * @author Mariusz Bal
  */
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 class ScrappedBook {
@@ -28,4 +28,5 @@ class ScrappedBook {
     private BigDecimal oldPrice;
     private BigDecimal price;
     private String link;
+
 }

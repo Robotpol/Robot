@@ -1,6 +1,5 @@
 package robot;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -12,8 +11,12 @@ import java.util.ArrayList;
 @Service
 class ScrappedBookService {
 
-    @Autowired
-    private ScrappedBookRepository repository;
+    private final ScrappedBookRepository repository;
+
+    ScrappedBookService(ScrappedBookRepository repository) {
+        this.repository = repository;
+    }
+
 
     void save(String bookstore, Books books) {
         repository.saveAll(books

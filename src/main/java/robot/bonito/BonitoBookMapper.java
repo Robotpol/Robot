@@ -1,6 +1,5 @@
 package robot.bonito;
 
-import org.springframework.stereotype.Component;
 import robot.Book;
 
 import java.time.LocalDateTime;
@@ -10,8 +9,7 @@ import java.util.List;
 /**
  * @author Dominik Żebracki
  */
-@Component
-final class BonitoBookMapper {
+interface BonitoBookMapper {
 
     static List<Book> toBook(Collection<BonitoBook> books) {
         return books.stream()
@@ -35,8 +33,5 @@ final class BonitoBookMapper {
                         .createdAt(currentTime)
                         .build())
                 .toList();
-    }
-
-    private BonitoBookMapper() {
     }
 }

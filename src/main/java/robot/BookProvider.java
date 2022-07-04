@@ -6,6 +6,5 @@ package robot;
 public interface BookProvider {
 
     Books provideBooks();
-    boolean updateBooks();
     Books updateAndProvideBooks();
 }

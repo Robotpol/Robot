@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Dominik Żebracki
  */
-final class PwnBookMapper {
+interface PwnBookMapper {
 
     static List<PwnBook> toPwnBook(Collection<Book> books) {
         var currentTime = LocalDateTime.now();
@@ -34,6 +34,4 @@ final class PwnBookMapper {
                         b.getLink()))
                 .toList();
     }
-
-    private PwnBookMapper(){}
 }
