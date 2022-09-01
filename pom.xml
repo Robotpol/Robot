@@ -39,7 +39,7 @@
         <webdrivermanager.version>5.2.0</webdrivermanager.version>
         <mockito-testng.version>0.4.26</mockito-testng.version>
         <lombok.version>1.18.24</lombok.version>
-        <jsoup.version>1.15.1</jsoup.version>
+        <jsoup.version>1.15.3</jsoup.version>
         <maven-failsafe-plugin.version>3.0.0-M7</maven-failsafe-plugin.version>
         <h2.version>2.1.214</h2.version>
     </properties>
