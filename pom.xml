@@ -41,7 +41,7 @@
         <lombok.version>1.18.24</lombok.version>
         <jsoup.version>1.15.1</jsoup.version>
         <maven-failsafe-plugin.version>3.0.0-M7</maven-failsafe-plugin.version>
-        <h2.version>2.1.214</h2.version>
+        <h2.version>2.2.220</h2.version>
     </properties>
 
     <profiles>
